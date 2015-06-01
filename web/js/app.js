@@ -1,4 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+
+},{}],2:[function(require,module,exports){
 'use strict';
 
 var angular = require('angular');
@@ -18,6 +20,7 @@ var globalDeps = [
 angular
   .module('Studymode', globalDeps)
   .controller('routeController', routeController)
+  .controller('UserModel', UserModel)
   .config(['$componentLoaderProvider', templateLoader]);
 
 routeController.$inject = ['$router'];
@@ -41,7 +44,26 @@ function templateLoader($componentLoaderProvider) {
     return 'templates/' + name + '.html';
   });
 }
-},{"./dashboard/Dashboard":2,"angular":7,"angular-new-router":5}],2:[function(require,module,exports){
+
+
+UserModel.$inject = ['$http'];
+
+/* @ngInject */
+function UserModel($http) {
+  var service = {
+    fetch: fetch
+  };
+
+  return service;
+
+  ////////////////
+
+  function fetch(id) {
+    return $http.get('http://jsonplaceholder.typicode.com/users/' + id);
+  }
+
+}
+},{"./dashboard/Dashboard":3,"angular":8,"angular-new-router":6}],3:[function(require,module,exports){
 'use strict';
 
 require('./SettingsController');
@@ -53,7 +75,7 @@ angular.module('Dashboard', [
 ]);
 
 module.exports = 'Dashboard';
-},{"./ProfileController":3,"./SettingsController":4}],3:[function(require,module,exports){
+},{"./ProfileController":4,"./SettingsController":5}],4:[function(require,module,exports){
 'use strict';
 
 angular
@@ -80,17 +102,17 @@ function ProfileController($routeParams) {
 }
 
 module.exports = 'Dashboard.Profile';
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 angular
   .module('Dashboard.Settings', [])
   .controller('SettingsController', SettingsController);
 
-SettingsController.$inject = ['$routeParams'];
+SettingsController.$inject = ['$routeParams', 'UserModel'];
 
 /* @ngInject */
-function SettingsController($routeParams) {
+function SettingsController($routeParams, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -102,12 +124,16 @@ function SettingsController($routeParams) {
 
   function activate() {
     console.log('SettingsController loaded');
+
+    UserModel.fetch(1).then(function(user) {
+      vm.user = user;
+    });
   }
 
 }
 
 module.exports = 'Dashboard.Settings';
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1705,7 +1731,7 @@ function mapObj(obj, fn) {
 return new Grammar();
 }]);
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -29839,8 +29865,8 @@ var minlengthDirective = function() {
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}]},{},[1,2,3,4]);
+},{"./angular":7}]},{},[1,2,3,4,5]);

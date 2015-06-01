@@ -17,6 +17,7 @@ var globalDeps = [
 angular
   .module('Studymode', globalDeps)
   .controller('routeController', routeController)
+  .controller('UserModel', UserModel)
   .config(['$componentLoaderProvider', templateLoader]);
 
 routeController.$inject = ['$router'];
@@ -39,4 +40,23 @@ function templateLoader($componentLoaderProvider) {
   $componentLoaderProvider.setTemplateMapping(function (name) {
     return 'templates/' + name + '.html';
   });
+}
+
+
+UserModel.$inject = ['$http'];
+
+/* @ngInject */
+function UserModel($http) {
+  var service = {
+    fetch: fetch
+  };
+
+  return service;
+
+  ////////////////
+
+  function fetch(id) {
+    return $http.get('http://jsonplaceholder.typicode.com/users/' + id);
+  }
+
 }
