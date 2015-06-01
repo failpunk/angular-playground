@@ -5,16 +5,103 @@
   <title>React Playground</title>
 
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/bootstrap-flatly.min.css"/>
   <link rel="stylesheet" href="css/main.css"/>
 </head>
 
 <body ng-app="studymode">
 
-  <div id="topnav"></div>
+<div class="container-fluid">
 
-  <div id="content" class="fluid-container" ng-controller="testCtrl as ctrl">
-    {{ ctrl.title }}
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Brand</a>
   </div>
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+          <li class="divider"></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Link</a></li>
+    </ul>
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-3">
+      <ul class="nav nav-pills nav-stacked">
+        <li class=""><a class="" href="#/profile">profile</a>
+        </li>
+        <li class="active"><a class=" active" href="#/settings">settings</a>
+        </li>
+        <li class=""><a class="" href="#/messages">messages</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-8">
+      <div>
+        <div>
+          <div class="page-header">
+            <h1>Account Settings</h1>
+            <p class="lead">Manage your personal information, billing details and connected accounts.</p>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row form-account">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <h4>Username</h4>premium</div>
+                  <div class="form-group">
+                    <h4>Password</h4>********<a class="" href="#/settings/password">Modify</a>
+                  </div>
+                  <div class="form-group">
+                    <h4>Email Preferences</h4>justin+premium@studymode.com<a class="" href="#/settings/email">Modify</a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <h4>Account Type</h4>Premium Membership ending on Jun 20th, 2015
+                    <p><a href="#">Modify Account</a>
+                    </p>
+                  </div>
+                  <div class="form-group">
+                    <h4>Billing Information</h4>Credit Card ending in 1111<a href="#">modify</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 </body>
 
