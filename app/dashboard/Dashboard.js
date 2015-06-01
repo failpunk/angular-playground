@@ -8,5 +8,4 @@ angular.module('Dashboard', [
   'Dashboard.Settings'
 ]);
 
-
 module.exports = 'Dashboard';

@@ -16,7 +16,8 @@ var globalDeps = [
 
 angular
   .module('Studymode', globalDeps)
-  .controller('routeController', routeController);
+  .controller('routeController', routeController)
+  .config(['$componentLoaderProvider', templateLoader]);
 
 routeController.$inject = ['$router'];
 
@@ -32,4 +33,10 @@ function routeController($router) {
   ]);
 
   vm.name='justin';
+}
+
+function templateLoader($componentLoaderProvider) {
+  $componentLoaderProvider.setTemplateMapping(function (name) {
+    return 'templates/' + name + '.html';
+  });
 }

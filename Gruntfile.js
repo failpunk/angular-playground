@@ -34,14 +34,26 @@ module.exports = function (grunt) {
 
     watch: {
         files: 'app/**',
-        tasks: ['browserify']
+        tasks: ['browserify', 'copy']
+    },
+
+    copy: {
+      templates: {    // copy template files to the shared templates folder in web
+        files: [{
+          src: 'app/**/templates/*.html',
+          dest: 'web/templates/',
+          flatten: true,
+          expand: true
+        }]
+      }
     }
   });
 
   // load
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // register
-  grunt.registerTask('default', ['browserify']);
+  grunt.registerTask('default', ['browserify', 'copy']);
 };

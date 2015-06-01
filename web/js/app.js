@@ -17,7 +17,8 @@ var globalDeps = [
 
 angular
   .module('Studymode', globalDeps)
-  .controller('routeController', routeController);
+  .controller('routeController', routeController)
+  .config(['$componentLoaderProvider', templateLoader]);
 
 routeController.$inject = ['$router'];
 
@@ -35,6 +36,11 @@ function routeController($router) {
   vm.name='justin';
 }
 
+function templateLoader($componentLoaderProvider) {
+  $componentLoaderProvider.setTemplateMapping(function (name) {
+    return 'templates/' + name + '.html';
+  });
+}
 },{"./dashboard/Dashboard":2,"angular":7,"angular-new-router":5}],2:[function(require,module,exports){
 'use strict';
 
@@ -45,7 +51,6 @@ angular.module('Dashboard', [
   'Dashboard.Profile',
   'Dashboard.Settings'
 ]);
-
 
 module.exports = 'Dashboard';
 },{"./ProfileController":3,"./SettingsController":4}],3:[function(require,module,exports){
