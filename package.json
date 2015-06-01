@@ -1,0 +1,30 @@
+{
+  "name": "angular-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/failpunk/angular-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/failpunk/angular-playground/issues"
+  },
+  "homepage": "https://github.com/failpunk/angular-playground#readme",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bootstrap": "^3.3.4",
+    "browserify": "^10.2.3",
+    "browserify-shim": "^3.8.7",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "jquery": "^2.1.4",
+    "moment": "^2.10.3"
+  }
+}
