@@ -4,14 +4,14 @@ angular
   .module('Dashboard.Settings', [])
   .controller('SettingsController', SettingsController);
 
-SettingsController.$inject = ['$routeParams', 'UserModel'];
+SettingsController.$inject = ['$stateParams', 'UserModel'];
 
 /* @ngInject */
-function SettingsController($routeParams, UserModel) {
+function SettingsController($stateParams, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
-  vm.message = 'Your new WTF settings ' + $routeParams.name;
+  vm.message = 'Your new WTF settings ';
 
   activate();
 
@@ -20,8 +20,9 @@ function SettingsController($routeParams, UserModel) {
   function activate() {
     console.log('SettingsController loaded');
 
-    UserModel.fetch(1).then(function(user) {
-      vm.user = user;
+    UserModel.fetch(1).then(function(response) {
+      vm.user = response.data;
+      console.log('user', vm.user);
     });
   }
 

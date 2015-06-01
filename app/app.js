@@ -1,45 +1,55 @@
 'use strict';
 
 var angular = require('angular');
-var ngNewRouter = require('angular-new-router');
+var uiRouter = require('ui-router');
 
 require('./dashboard/Dashboard');
 
 
 var globalDeps = [
-  'ngNewRouter',
+  'ui.router',
 
   // Controllers
-  'Dashboard'
+  'Dashboard',
 ];
 
 
 angular
   .module('Studymode', globalDeps)
-  .controller('routeController', routeController)
-  .controller('UserModel', UserModel)
-  .config(['$componentLoaderProvider', templateLoader]);
+  .factory('UserModel', UserModel)
+  .config(appConfig);
 
-routeController.$inject = ['$router'];
 
-/* @ngInject */
-function routeController($router) {
-  /* jshint validthis: true */
-  var vm = this;
+appConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-  $router.config([
-    {path:'/', redirectTo:'/profile'},
-    {path:'/profile', component:'profile'},
-    {path:'/settings/:name', component:'settings'}
-  ]);
+function appConfig($stateProvider, $urlRouterProvider) {
 
-  vm.name='justin';
-}
+  $urlRouterProvider.otherwise('/dashboard/profile');
 
-function templateLoader($componentLoaderProvider) {
-  $componentLoaderProvider.setTemplateMapping(function (name) {
-    return 'templates/' + name + '.html';
-  });
+  $stateProvider
+    //.state('dashboard', {
+    //  url: '/dashboard',
+    //  controller: 'dashboardController',
+    //  controllerAs: 'vm',
+    //  templateUrl: 'app/dashboard/templates/settings.html'
+    //})
+      .state('profile', {
+        url: '/dashboard/profile',
+        controller: 'ProfileController as vm',
+        templateUrl: 'templates/profile.html'
+      })
+      .state('settings', {
+        url: '/dashboard/settings',
+        controller: 'SettingsController as vm',
+        templateUrl: 'templates/settings.html'
+      })
+      .state('messages', {
+        url: '/dashboard/messages',
+        controller: 'MessagesController as vm',
+        templateUrl: 'templates/messages.html'
+      })
+  ;
+
 }
 
 

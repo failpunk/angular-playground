@@ -9,25 +9,26 @@
   <link rel="stylesheet" href="css/main.css"/>
 </head>
 
-<body ng-app="Studymode" ng-controller="routeController as vm">
+<body ng-app="Studymode">
 
-<div class="container-fluid">
-  <div ng-include="'templates/topNav.html'"></div>
+  <div class="container-fluid">
+    <div ng-include="'templates/topNav.html'"></div>
 
-  <div class="view">
-    <div class="col-md-3">
+    <div class="view">
+      <div class="col-md-3">
 
-      <ul class="nav">
-        <li><a ng-link="profile">Profile</a></li>
-        <li><a ng-link="settings({ name:vm.name })">Settings</a></li>
-      </ul>
+        <ul class="nav">
+          <li><a ui-sref="profile">Profile</a></li>
+          <li><a ui-sref="settings">Settings</a></li>
+          <li><a ui-sref="messages">Messages</a></li>
+        </ul>
 
-    </div>
-    <div class="col-md-8">
-      <ng-viewport></ng-viewport>
+      </div>
+      <div class="col-md-8">
+        <ui-view></ui-view>
+      </div>
     </div>
   </div>
-</div>
 
 </body>
 

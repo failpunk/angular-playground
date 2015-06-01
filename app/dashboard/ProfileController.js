@@ -4,10 +4,10 @@ angular
   .module('Dashboard.Profile', [])
   .controller('ProfileController', ProfileController);
 
-ProfileController.$inject = ['$routeParams'];
+ProfileController.$inject = ['$stateParams'];
 
 /* @ngInject */
-function ProfileController($routeParams) {
+function ProfileController($stateParams) {
   /* jshint validthis: true */
   var vm = this;
 
