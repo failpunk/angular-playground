@@ -1,10 +1,32 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
 
+angular
+  .module('Models.User', [])
+  .factory('UserModel', UserModel);
+
+UserModel.$inject = ['$http'];
+
+/* @ngInject */
+function UserModel($http) {
+  var service = {
+    fetch: fetch
+  };
+
+  return service;
+
+  ////////////////
+
+  function fetch(id) {
+    return $http.get('http://jsonplaceholder.typicode.com/users/' + id);
+  }
+
+}
 },{}],2:[function(require,module,exports){
 'use strict';
 
 var angular = require('angular');
-var uiRouter = require('ui-router');
+require('ui-router');
 
 require('./dashboard/Dashboard');
 
@@ -12,14 +34,13 @@ require('./dashboard/Dashboard');
 var globalDeps = [
   'ui.router',
 
-  // Controllers
+  'Models.User',
   'Dashboard',
 ];
 
 
 angular
   .module('Studymode', globalDeps)
-  .factory('UserModel', UserModel)
   .config(appConfig);
 
 
@@ -30,12 +51,6 @@ function appConfig($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/dashboard/profile');
 
   $stateProvider
-    //.state('dashboard', {
-    //  url: '/dashboard',
-    //  controller: 'dashboardController',
-    //  controllerAs: 'vm',
-    //  templateUrl: 'app/dashboard/templates/settings.html'
-    //})
       .state('profile', {
         url: '/dashboard/profile',
         controller: 'ProfileController as vm',
@@ -56,23 +71,7 @@ function appConfig($stateProvider, $urlRouterProvider) {
 }
 
 
-UserModel.$inject = ['$http'];
 
-/* @ngInject */
-function UserModel($http) {
-  var service = {
-    fetch: fetch
-  };
-
-  return service;
-
-  ////////////////
-
-  function fetch(id) {
-    return $http.get('http://jsonplaceholder.typicode.com/users/' + id);
-  }
-
-}
 },{"./dashboard/Dashboard":3,"angular":8,"ui-router":9}],3:[function(require,module,exports){
 'use strict';
 
