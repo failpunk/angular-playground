@@ -4,14 +4,12 @@ angular
   .module('Dashboard.Messages', [])
   .controller('MessagesController', MessagesController);
 
-MessagesController.$inject = ['$stateParams'];
+MessagesController.$inject = ['$stateParams', 'UserModel'];
 
 /* @ngInject */
-function MessagesController($stateParams) {
+function MessagesController($stateParams, UserModel) {
   /* jshint validthis: true */
   var vm = this;
-
-  vm.message = 'Messages module and stuff';
 
   activate();
 
@@ -19,6 +17,10 @@ function MessagesController($stateParams) {
 
   function activate() {
     console.log('MessagesController loaded');
+
+    UserModel.fetch(1).then(function(data) {
+      vm.user = data;
+    });
   }
 
 }

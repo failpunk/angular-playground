@@ -5,10 +5,13 @@ angular
   .module('Models.User', [])
   .factory('UserModel', UserModel);
 
-UserModel.$inject = ['$http'];
+UserModel.$inject = ['$http', '$q'];
 
 /* @ngInject */
-function UserModel($http) {
+function UserModel($http, $q) {
+
+  var userData;
+
   var service = {
     fetch: fetch
   };
@@ -18,7 +21,16 @@ function UserModel($http) {
   ////////////////
 
   function fetch(id) {
-    return $http.get('http://jsonplaceholder.typicode.com/users/' + id);
+    if(userData) {
+      console.log('returning cached user');
+      return $q.when(userData);   // return cached data
+    } else {
+      console.log('Fetch user via ajax');
+      return $http.get('http://jsonplaceholder.typicode.com/users/' + id)
+        .then(function(response) {
+          return userData = response.data;
+        });
+    }
   }
 
 }
@@ -69,9 +81,6 @@ function appConfig($stateProvider, $urlRouterProvider) {
   ;
 
 }
-
-
-
 },{"./dashboard/Dashboard":3,"angular":8,"ui-router":9}],3:[function(require,module,exports){
 'use strict';
 
@@ -93,14 +102,12 @@ angular
   .module('Dashboard.Messages', [])
   .controller('MessagesController', MessagesController);
 
-MessagesController.$inject = ['$stateParams'];
+MessagesController.$inject = ['$stateParams', 'UserModel'];
 
 /* @ngInject */
-function MessagesController($stateParams) {
+function MessagesController($stateParams, UserModel) {
   /* jshint validthis: true */
   var vm = this;
-
-  vm.message = 'Messages module and stuff';
 
   activate();
 
@@ -108,6 +115,10 @@ function MessagesController($stateParams) {
 
   function activate() {
     console.log('MessagesController loaded');
+
+    UserModel.fetch(1).then(function(data) {
+      vm.user = data;
+    });
   }
 
 }
@@ -118,10 +129,10 @@ angular
   .module('Dashboard.Profile', [])
   .controller('ProfileController', ProfileController);
 
-ProfileController.$inject = ['$stateParams'];
+ProfileController.$inject = ['$stateParams', 'UserModel'];
 
 /* @ngInject */
-function ProfileController($stateParams) {
+function ProfileController($stateParams, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -133,6 +144,10 @@ function ProfileController($stateParams) {
 
   function activate() {
     console.log('ProfileController loaded');
+
+    UserModel.fetch(1).then(function(data) {
+      vm.user = data;
+    });
   }
 
 }
@@ -161,9 +176,8 @@ function SettingsController($stateParams, UserModel) {
   function activate() {
     console.log('SettingsController loaded');
 
-    UserModel.fetch(1).then(function(response) {
-      vm.user = response.data;
-      console.log('user', vm.user);
+    UserModel.fetch(1).then(function(data) {
+      vm.user = data;
     });
   }
 

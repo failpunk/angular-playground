@@ -4,10 +4,10 @@ angular
   .module('Dashboard.Profile', [])
   .controller('ProfileController', ProfileController);
 
-ProfileController.$inject = ['$stateParams'];
+ProfileController.$inject = ['$stateParams', 'UserModel'];
 
 /* @ngInject */
-function ProfileController($stateParams) {
+function ProfileController($stateParams, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -19,6 +19,10 @@ function ProfileController($stateParams) {
 
   function activate() {
     console.log('ProfileController loaded');
+
+    UserModel.fetch(1).then(function(data) {
+      vm.user = data;
+    });
   }
 
 }

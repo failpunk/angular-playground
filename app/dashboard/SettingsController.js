@@ -20,9 +20,8 @@ function SettingsController($stateParams, UserModel) {
   function activate() {
     console.log('SettingsController loaded');
 
-    UserModel.fetch(1).then(function(response) {
-      vm.user = response.data;
-      console.log('user', vm.user);
+    UserModel.fetch(1).then(function(data) {
+      vm.user = data;
     });
   }
 

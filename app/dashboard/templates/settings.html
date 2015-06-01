@@ -9,18 +9,24 @@
       <div class="row form-account">
         <div class="col-md-6">
           <div class="form-group">
-            <h4>Username</h4>premium
+            <h4>Username</h4>
+            {{vm.user.username}}
           </div>
           <div class="form-group">
-            <h4>Password</h4>********<a class="" href="#/settings/password">Modify</a>
+            <h4>Password</h4>
+            ********
+            <a class="" href="#/settings/password">Modify</a>
           </div>
           <div class="form-group">
-            <h4>Email Preferences</h4>justin+premium@studymode.com<a class="" href="#/settings/email">Modify</a>
+            <h4>Email Preferences</h4>
+            {{vm.user.email}}
+            <a class="" href="#/settings/email">Modify</a>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <h4>Account Type</h4>Premium Membership ending on Jun 20th, 2015
+            <h4>Account Type</h4>
+            Premium Membership ending on Jun 20th, 2015
             <p><a href="#">Modify Account</a>
             </p>
           </div>
