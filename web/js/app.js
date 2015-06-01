@@ -1,103 +1,108 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
 var angular = require('angular');
 var ngNewRouter = require('angular-new-router');
 
-require('./components/dashboard/dashboard');
+require('./dashboard/Dashboard');
 
 
 var globalDeps = [
   'ngNewRouter',
 
   // Controllers
-  'Dashboard',
-  'Other'
+  'Dashboard'
 ];
 
-//angular
-//  .module('Studymode', globalDeps)
-//  .controller('StudyModeCtrl', StudyModeCtrl);
-//
-//StudyModeCtrl.$inject = ['$router'];
-//
-//StudyModeCtrl.$routeConfig = [
-//  { path: '/', redirectTo: '/dashboard' },
-//  { path: '/dashboard', component: 'dashboard' },
-//  { path: '/other', component: 'other' }
-//];
-//
-///* @ngInject */
-//function StudyModeCtrl($router) {
-//
-//}
+
+angular
+  .module('Studymode', globalDeps)
+  .controller('routeController', routeController);
+
+routeController.$inject = ['$router'];
+
+/* @ngInject */
+function routeController($router) {
+  /* jshint validthis: true */
+  var vm = this;
+
+  $router.config([
+    {path:'/', redirectTo:'/profile'},
+    {path:'/profile', component:'profile'},
+    {path:'/settings/:name', component:'settings'}
+  ]);
+
+  vm.name='justin';
+}
+
+},{"./dashboard/Dashboard":2,"angular":7,"angular-new-router":5}],2:[function(require,module,exports){
+'use strict';
+
+require('./SettingsController');
+require('./ProfileController');
+
+angular.module('Dashboard', [
+  'Dashboard.Profile',
+  'Dashboard.Settings'
+]);
 
 
-angular.module('Studymode', ['ngNewRouter'])
-  .controller('routeController', ['$router', function($router){
-    $router.config([
-      {path:'/', redirectTo:'/profile'},
-      {path:'/profile', component:'profile'},
-      {path:'/settings/:name', component:'settings'}
-    ]);
+module.exports = 'Dashboard';
+},{"./ProfileController":3,"./SettingsController":4}],3:[function(require,module,exports){
+'use strict';
 
-    this.name='justin';
-  }])
-  .controller('ProfileController', function () {
+angular
+  .module('Dashboard.Profile', [])
+  .controller('ProfileController', ProfileController);
+
+ProfileController.$inject = ['$routeParams'];
+
+/* @ngInject */
+function ProfileController($routeParams) {
+  /* jshint validthis: true */
+  var vm = this;
+
+  vm.message = 'Your new Profile';
+
+  activate();
+
+  ////////////////
+
+  function activate() {
     console.log('ProfileController loaded');
-    this.message = 'Your Profile';
-  })
-  .controller('SettingsController', function ($routeParams) {
-    console.log('SettingsController loaded');
-    this.message = 'Your settings ' + $routeParams.name;
-  });
-},{"./components/dashboard/dashboard":2,"angular":6,"angular-new-router":4}],2:[function(require,module,exports){
-angular
-  .module('Dashboard', [])
-  .controller('DashboardCtrl', DashboardCtrl)
-
-  .$inject = ['$http', '$router'];
-
-/* @ngInject */
-function DashboardCtrl($http, $router) {
-  /* jshint validthis: true */
-  var vm = this;
-console.log('DashboardCtrl', $router);
-  vm.activate = activate;
-  vm.title = 'Dashboard';
-
-  activate();
-
-  ////////////////
-
-  function activate() {
   }
 
-
 }
-},{}],3:[function(require,module,exports){
-angular
-  .module('Other', [])
-  .controller('OtherController', OtherController)
 
-  .$inject = ['$http', '$router'];
-
-/* @ngInject */
-function OtherController($http, $router) {
-  /* jshint validthis: true */
-  var vm = this;
-console.log('OtherController', $router);
-  vm.activate = activate;
-  vm.title = 'Other';
-
-  activate();
-
-  ////////////////
-
-  function activate() {
-  }
-
-
-}
+module.exports = 'Dashboard.Profile';
 },{}],4:[function(require,module,exports){
+'use strict';
+
+angular
+  .module('Dashboard.Settings', [])
+  .controller('SettingsController', SettingsController);
+
+SettingsController.$inject = ['$routeParams'];
+
+/* @ngInject */
+function SettingsController($routeParams) {
+  /* jshint validthis: true */
+  var vm = this;
+
+  vm.message = 'Your new WTF settings ' + $routeParams.name;
+
+  activate();
+
+  ////////////////
+
+  function activate() {
+    console.log('SettingsController loaded');
+  }
+
+}
+
+module.exports = 'Dashboard.Settings';
+},{}],5:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1695,7 +1700,7 @@ function mapObj(obj, fn) {
 return new Grammar();
 }]);
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -29829,8 +29834,8 @@ var minlengthDirective = function() {
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":5}]},{},[1,2,3]);
+},{"./angular":6}]},{},[1,2,3,4]);

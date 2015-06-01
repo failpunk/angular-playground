@@ -1,50 +1,35 @@
+'use strict';
+
 var angular = require('angular');
 var ngNewRouter = require('angular-new-router');
 
-require('./components/dashboard/dashboard');
+require('./dashboard/Dashboard');
 
 
 var globalDeps = [
   'ngNewRouter',
 
   // Controllers
-  'Dashboard',
-  'Other'
+  'Dashboard'
 ];
 
-//angular
-//  .module('Studymode', globalDeps)
-//  .controller('StudyModeCtrl', StudyModeCtrl);
-//
-//StudyModeCtrl.$inject = ['$router'];
-//
-//StudyModeCtrl.$routeConfig = [
-//  { path: '/', redirectTo: '/dashboard' },
-//  { path: '/dashboard', component: 'dashboard' },
-//  { path: '/other', component: 'other' }
-//];
-//
-///* @ngInject */
-//function StudyModeCtrl($router) {
-//
-//}
 
+angular
+  .module('Studymode', globalDeps)
+  .controller('routeController', routeController);
 
-angular.module('Studymode', ['ngNewRouter'])
-  .controller('routeController', ['$router', function($router){
-    $router.config([
-      {path:'/', redirectTo:'/profile'},
-      {path:'/profile', component:'profile'},
-      {path:'/settings/:name', component:'settings'}
-    ]);
+routeController.$inject = ['$router'];
 
-    this.name='justin';
-  }])
-  .controller('ProfileController', function () {
-    console.log('ProfileController loaded');
-    this.message = 'Your Profile';
-  })
-  .controller('SettingsController', function ($routeParams) {
-    console.log('SettingsController loaded');
-    this.message = 'Your settings ' + $routeParams.name;
-  });
+/* @ngInject */
+function routeController($router) {
+  /* jshint validthis: true */
+  var vm = this;
+
+  $router.config([
+    {path:'/', redirectTo:'/profile'},
+    {path:'/profile', component:'profile'},
+    {path:'/settings/:name', component:'settings'}
+  ]);
+
+  vm.name='justin';
+}
