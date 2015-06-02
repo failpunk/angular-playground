@@ -14,13 +14,21 @@
   <div class="container-fluid">
     <div ng-include="'templates/topNav.html'"></div>
 
+    <pre>{{state|json}}</pre>
+
     <div class="view">
       <div class="col-md-3">
 
-        <ul class="nav">
-          <li><a ui-sref="profile">Profile</a></li>
-          <li><a ui-sref="settings">Settings</a></li>
-          <li><a ui-sref="messages">Messages</a></li>
+        <ul class="nav nav-pills nav-stacked" ng-controller="NavController as nav">
+          <li ng-class="nav.isSubRoute('profile') ? 'active' : ''">
+            <a ui-sref="profile">Profile</a>
+          </li>
+          <li ng-class="nav.isSubRoute('settings') ? 'active' : ''">
+            <a ui-sref="settings">Settings</a>
+          </li>
+          <li ng-class="nav.isSubRoute('messages') ? 'active' : ''">
+            <a ui-sref="messages">Messages</a>
+          </li>
         </ul>
 
       </div>
