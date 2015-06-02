@@ -2,10 +2,10 @@
 
 module.exports = PasswordController;
 
-PasswordController.$inject = ['$log', 'UserModel'];
+PasswordController.$inject = ['$log', 'DataService'];
 
 /* @ngInject */
-function PasswordController($log, UserModel) {
+function PasswordController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -19,7 +19,7 @@ function PasswordController($log, UserModel) {
   function activate() {
     console.log('PasswordController loaded');
 
-    UserModel.fetch(1).then(function(data) {
+    DataService.getUser(1).then(function(data) {
       vm.user = data;
     });
   }

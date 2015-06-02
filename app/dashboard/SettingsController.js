@@ -2,10 +2,10 @@
 
 module.exports = SettingsController;
 
-SettingsController.$inject = ['$log', 'UserModel'];
+SettingsController.$inject = ['$log', 'DataService'];
 
 /* @ngInject */
-function SettingsController($log, UserModel) {
+function SettingsController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -18,7 +18,7 @@ function SettingsController($log, UserModel) {
   function activate() {
     $log.info('SettingsController loaded');
 
-    UserModel.fetch(1).then(function(data) {
+    DataService.getUser(1).then(function(data) {
       vm.user = data;
     });
   }

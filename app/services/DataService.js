@@ -1,28 +1,23 @@
 'use strict';
 
-module.exports = UserModel;
+module.exports = DataService;
 
-UserModel.$inject = ['$http', '$q', '$log'];
+DataService.$inject = ['$http', '$q', '$log'];
 
 /* @ngInject */
-function UserModel($http, $q, $log) {
+function DataService($http, $q, $log) {
 
   var userData;
 
   var service = {
-    fetch: fetch,
-    test: test
+    getUser: getUser
   };
 
   return service;
 
   ////////////////
 
-  function test() {
-    return true;
-  }
-
-  function fetch(id) {
+  function getUser(id) {
     if(userData) {
       $log.info('returning cached user');
       return $q.when(userData);   // return cached data

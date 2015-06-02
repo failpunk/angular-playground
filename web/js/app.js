@@ -87,10 +87,10 @@ require('./services');
 
 module.exports = MessagesController;
 
-MessagesController.$inject = ['$log', 'UserModel'];
+MessagesController.$inject = ['$log', 'DataService'];
 
 /* @ngInject */
-function MessagesController($log, UserModel) {
+function MessagesController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -101,7 +101,7 @@ function MessagesController($log, UserModel) {
   function activate() {
     $log.info('MessagesController loaded');
 
-    UserModel.fetch(1).then(function(data) {
+    DataService.getUser(1).then(function(data) {
       vm.user = data;
     });
   }
@@ -112,10 +112,10 @@ function MessagesController($log, UserModel) {
 
 module.exports = PasswordController;
 
-PasswordController.$inject = ['$log', 'UserModel'];
+PasswordController.$inject = ['$log', 'DataService'];
 
 /* @ngInject */
-function PasswordController($log, UserModel) {
+function PasswordController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -129,7 +129,7 @@ function PasswordController($log, UserModel) {
   function activate() {
     console.log('PasswordController loaded');
 
-    UserModel.fetch(1).then(function(data) {
+    DataService.getUser(1).then(function(data) {
       vm.user = data;
     });
   }
@@ -148,10 +148,10 @@ function PasswordController($log, UserModel) {
 
 module.exports = ProfileController;
 
-ProfileController.$inject = ['$log', 'UserModel'];
+ProfileController.$inject = ['$log', 'DataService'];
 
 /* @ngInject */
-function ProfileController($log, UserModel) {
+function ProfileController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -164,7 +164,7 @@ function ProfileController($log, UserModel) {
   function activate() {
     $log.info('ProfileController loaded');
 
-    UserModel.fetch(1).then(function(data) {
+    DataService.getUser(1).then(function(data) {
       vm.user = data;
     });
   }
@@ -175,10 +175,10 @@ function ProfileController($log, UserModel) {
 
 module.exports = SettingsController;
 
-SettingsController.$inject = ['$log', 'UserModel'];
+SettingsController.$inject = ['$log', 'DataService'];
 
 /* @ngInject */
-function SettingsController($log, UserModel) {
+function SettingsController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -191,7 +191,7 @@ function SettingsController($log, UserModel) {
   function activate() {
     $log.info('SettingsController loaded');
 
-    UserModel.fetch(1).then(function(data) {
+    DataService.getUser(1).then(function(data) {
       vm.user = data;
     });
   }
@@ -208,29 +208,24 @@ app.controller('PasswordController', require('./PasswordController'));
 },{"./MessagesController":5,"./PasswordController":6,"./ProfileController":7,"./SettingsController":8,"angular":15}],10:[function(require,module,exports){
 'use strict';
 
-module.exports = UserModel;
+module.exports = DataService;
 
-UserModel.$inject = ['$http', '$q', '$log'];
+DataService.$inject = ['$http', '$q', '$log'];
 
 /* @ngInject */
-function UserModel($http, $q, $log) {
+function DataService($http, $q, $log) {
 
   var userData;
 
   var service = {
-    fetch: fetch,
-    test: test
+    getUser: getUser
   };
 
   return service;
 
   ////////////////
 
-  function test() {
-    return true;
-  }
-
-  function fetch(id) {
+  function getUser(id) {
     if(userData) {
       $log.info('returning cached user');
       return $q.when(userData);   // return cached data
@@ -248,8 +243,8 @@ function UserModel($http, $q, $log) {
 'use strict';
 var app = require('angular').module('Studymode');
 
-app.factory('UserModel', require('./UserModel'));
-},{"./UserModel":10,"angular":15}],12:[function(require,module,exports){
+app.factory('DataService', require('./DataService'));
+},{"./DataService":10,"angular":15}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
