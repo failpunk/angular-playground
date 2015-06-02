@@ -10,12 +10,17 @@ function UserModel($http, $q) {
   var userData;
 
   var service = {
-    fetch: fetch
+    fetch: fetch,
+    test: test
   };
 
   return service;
 
   ////////////////
+
+  function test() {
+    return true;
+  }
 
   function fetch(id) {
     if(userData) {
