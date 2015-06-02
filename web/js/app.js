@@ -20,11 +20,16 @@ function Config($stateProvider, $urlRouterProvider) {
       controller: 'SettingsController as vm',
       templateUrl: 'templates/settings.html'
     })
-    .state('password', {
-      url: '/dashboard/settings/password',
-      controller: 'PasswordController as vm',
-      templateUrl: 'templates/password.html'
-    })
+      .state('password', {
+        url: '/dashboard/settings/password',
+        controller: 'PasswordController as vm',
+        templateUrl: 'templates/password.html'
+      })
+      .state('email', {
+        url: '/dashboard/settings/email',
+        controller: 'EmailController as vm',
+        templateUrl: 'templates/email.html'
+      })
     .state('messages', {
       url: '/dashboard/messages',
       controller: 'MessagesController as vm',
@@ -82,7 +87,38 @@ app.run(require('./Run'));
 
 require('./dashboard');
 require('./services');
-},{"./Config":1,"./NavController":2,"./Run":3,"./dashboard":9,"./services":11,"angular":17,"angular-messages":13,"angular-toastr":15,"ui-router":18}],5:[function(require,module,exports){
+},{"./Config":1,"./NavController":2,"./Run":3,"./dashboard":10,"./services":12,"angular":18,"angular-messages":14,"angular-toastr":16,"ui-router":19}],5:[function(require,module,exports){
+'use strict';
+
+module.exports = EmailController;
+
+EmailController.$inject = ['$log', 'DataService'];
+
+/* @ngInject */
+function EmailController($log, DataService) {
+  /* jshint validthis: true */
+  var vm = this;
+
+  vm.submitForm = submit;
+
+  activate();
+
+  ////////////////
+
+  function activate() {
+    console.log('EmailController loaded');
+
+    DataService.getUser(1).then(function(data) {
+      vm.user = data;
+    });
+  }
+
+  function submit() {
+    $log.info('submitting...');
+  }
+
+}
+},{}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = MessagesController;
@@ -107,7 +143,7 @@ function MessagesController($log, DataService) {
   }
 
 }
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 module.exports = PasswordController;
@@ -143,7 +179,7 @@ function PasswordController($log, DataService) {
   }
 
 }
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = ProfileController;
@@ -170,7 +206,7 @@ function ProfileController($log, DataService) {
   }
 
 }
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = SettingsController;
@@ -197,7 +233,7 @@ function SettingsController($log, DataService) {
   }
 
 }
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 var app = require('angular').module('Studymode');
 
@@ -205,7 +241,8 @@ app.controller('ProfileController', require('./ProfileController'));
 app.controller('SettingsController', require('./SettingsController'));
 app.controller('MessagesController', require('./MessagesController'));
 app.controller('PasswordController', require('./PasswordController'));
-},{"./MessagesController":5,"./PasswordController":6,"./ProfileController":7,"./SettingsController":8,"angular":17}],10:[function(require,module,exports){
+app.controller('EmailController', require('./EmailController'));
+},{"./EmailController":5,"./MessagesController":6,"./PasswordController":7,"./ProfileController":8,"./SettingsController":9,"angular":18}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = DataService;
@@ -239,12 +276,12 @@ function DataService($http, $q, $log) {
   }
 
 }
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 var app = require('angular').module('Studymode');
 
 app.factory('DataService', require('./DataService'));
-},{"./DataService":10,"angular":17}],12:[function(require,module,exports){
+},{"./DataService":11,"angular":18}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -924,11 +961,11 @@ function ngMessageDirectiveFactory(restrict) {
 
 })(window, window.angular);
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular-messages');
 module.exports = 'ngMessages';
 
-},{"./angular-messages":12}],14:[function(require,module,exports){
+},{"./angular-messages":13}],15:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -1398,12 +1435,12 @@ module.exports = 'ngMessages';
 
 angular.module("toastr").run(["$templateCache", function($templateCache) {$templateCache.put("directives/progressbar/progressbar.html","<div class=\"toast-progress\"></div>\n");
 $templateCache.put("directives/toast/toast.html","<div class=\"{{toastClass}} {{toastType}}\" ng-click=\"tapToast()\">\n  <div ng-switch on=\"allowHtml\">\n    <div ng-switch-default ng-if=\"title\" class=\"{{titleClass}}\">{{title}}</div>\n    <div ng-switch-default class=\"{{messageClass}}\">{{message}}</div>\n    <div ng-switch-when=\"true\" ng-if=\"title\" class=\"{{titleClass}}\" ng-bind-html=\"title\"></div>\n    <div ng-switch-when=\"true\" class=\"{{messageClass}}\" ng-bind-html=\"message\"></div>\n  </div>\n  <progress-bar ng-if=\"progressBar\"></progress-bar>\n</div>\n");}]);
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 require('./dist/angular-toastr.tpls.js');
 module.exports = 'toastr';
 
 
-},{"./dist/angular-toastr.tpls.js":14}],16:[function(require,module,exports){
+},{"./dist/angular-toastr.tpls.js":15}],17:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -29537,11 +29574,11 @@ var minlengthDirective = function() {
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":16}],18:[function(require,module,exports){
+},{"./angular":17}],19:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.8
@@ -32199,4 +32236,4 @@ angular.module('ui.router.compat')
   .provider('$route', $RouteProvider)
   .directive('ngView', $ViewDirective);
 })(window, window.angular);
-},{}]},{},[1,2,3,4,5,6,7,8,9,10,11]);
+},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12]);

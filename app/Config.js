@@ -19,11 +19,16 @@ function Config($stateProvider, $urlRouterProvider) {
       controller: 'SettingsController as vm',
       templateUrl: 'templates/settings.html'
     })
-    .state('password', {
-      url: '/dashboard/settings/password',
-      controller: 'PasswordController as vm',
-      templateUrl: 'templates/password.html'
-    })
+      .state('password', {
+        url: '/dashboard/settings/password',
+        controller: 'PasswordController as vm',
+        templateUrl: 'templates/password.html'
+      })
+      .state('email', {
+        url: '/dashboard/settings/email',
+        controller: 'EmailController as vm',
+        templateUrl: 'templates/email.html'
+      })
     .state('messages', {
       url: '/dashboard/messages',
       controller: 'MessagesController as vm',

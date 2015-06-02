@@ -1,0 +1,37 @@
+<div>
+  <div class="page-header">
+    <h1>Email Preferences</h1>
+
+    <p class="lead">We'll occasionally send you account notifications and special offers to help you get the most out of StudyMode. We never share or sell your email address or personal information period.</p>
+  </div>
+
+  <form name="vm.updateEmailForm" ng-submit="vm.submitForm()" novalidate>
+    <div class="form-group">
+      <label for="oldPassword">Old Password</label>
+      <input
+          required
+          minlength="6"
+          type="password"
+          class="form-control"
+          id="oldPassword"
+          name="oldPassword"
+          placeholder="Old Password"
+          ng-model="vm.oldPassword">
+
+      <ng-messages for="vm.updateEmailForm.oldPassword.$error">
+        <ng-message class="help-block" when="minlength">Password must be 6 characters or longer</ng-message>
+        <ng-message class="help-block" when="required">Password is required</ng-message>
+      </ng-messages>
+
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-primary"
+        ng-disabled="vm.updateEmailForm.$invalid || vm.updateEmailForm.$pristine || vm.updateEmailForm.$submitted">
+      Update Password
+    </button>
+    <button ui-sref="settings" type="button" class="btn btn-default">Back</button>
+  </form>
+
+</div>
