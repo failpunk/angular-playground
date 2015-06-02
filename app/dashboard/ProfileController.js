@@ -2,10 +2,10 @@
 
 module.exports = ProfileController;
 
-ProfileController.$inject = ['$stateParams', 'UserModel'];
+ProfileController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function ProfileController($stateParams, UserModel) {
+function ProfileController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -16,7 +16,7 @@ function ProfileController($stateParams, UserModel) {
   ////////////////
 
   function activate() {
-    console.log('ProfileController loaded');
+    $log.info('ProfileController loaded');
 
     UserModel.fetch(1).then(function(data) {
       vm.user = data;

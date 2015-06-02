@@ -2,10 +2,10 @@
 
 module.exports = MessagesController;
 
-MessagesController.$inject = ['$stateParams', 'UserModel'];
+MessagesController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function MessagesController($stateParams, UserModel) {
+function MessagesController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -14,7 +14,7 @@ function MessagesController($stateParams, UserModel) {
   ////////////////
 
   function activate() {
-    console.log('MessagesController loaded');
+    $log.info('MessagesController loaded');
 
     UserModel.fetch(1).then(function(data) {
       vm.user = data;

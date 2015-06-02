@@ -87,10 +87,10 @@ require('./services');
 
 module.exports = MessagesController;
 
-MessagesController.$inject = ['$stateParams', 'UserModel'];
+MessagesController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function MessagesController($stateParams, UserModel) {
+function MessagesController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -99,7 +99,7 @@ function MessagesController($stateParams, UserModel) {
   ////////////////
 
   function activate() {
-    console.log('MessagesController loaded');
+    $log.info('MessagesController loaded');
 
     UserModel.fetch(1).then(function(data) {
       vm.user = data;
@@ -112,10 +112,10 @@ function MessagesController($stateParams, UserModel) {
 
 module.exports = PasswordController;
 
-PasswordController.$inject = ['$stateParams', 'UserModel'];
+PasswordController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function PasswordController($stateParams, UserModel) {
+function PasswordController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -139,7 +139,7 @@ function PasswordController($stateParams, UserModel) {
   }
 
   function submit() {
-    console.log('submitting...');
+    $log.info('submitting...');
   }
 
 }
@@ -148,10 +148,10 @@ function PasswordController($stateParams, UserModel) {
 
 module.exports = ProfileController;
 
-ProfileController.$inject = ['$stateParams', 'UserModel'];
+ProfileController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function ProfileController($stateParams, UserModel) {
+function ProfileController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -162,7 +162,7 @@ function ProfileController($stateParams, UserModel) {
   ////////////////
 
   function activate() {
-    console.log('ProfileController loaded');
+    $log.info('ProfileController loaded');
 
     UserModel.fetch(1).then(function(data) {
       vm.user = data;
@@ -175,10 +175,10 @@ function ProfileController($stateParams, UserModel) {
 
 module.exports = SettingsController;
 
-SettingsController.$inject = ['$stateParams', 'UserModel'];
+SettingsController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function SettingsController($stateParams, UserModel) {
+function SettingsController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -189,7 +189,7 @@ function SettingsController($stateParams, UserModel) {
   ////////////////
 
   function activate() {
-    console.log('SettingsController loaded');
+    $log.info('SettingsController loaded');
 
     UserModel.fetch(1).then(function(data) {
       vm.user = data;
@@ -210,10 +210,10 @@ app.controller('PasswordController', require('./PasswordController'));
 
 module.exports = UserModel;
 
-UserModel.$inject = ['$http', '$q'];
+UserModel.$inject = ['$http', '$q', '$log'];
 
 /* @ngInject */
-function UserModel($http, $q) {
+function UserModel($http, $q, $log) {
 
   var userData;
 
@@ -232,10 +232,10 @@ function UserModel($http, $q) {
 
   function fetch(id) {
     if(userData) {
-      console.log('returning cached user');
+      $log.info('returning cached user');
       return $q.when(userData);   // return cached data
     } else {
-      console.log('Fetch user via ajax');
+      $log.info('Fetch user via ajax');
       return $http.get('http://jsonplaceholder.typicode.com/users/' + id)
         .then(function(response) {
           return userData = response.data;

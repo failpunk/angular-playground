@@ -2,10 +2,10 @@
 
 module.exports = SettingsController;
 
-SettingsController.$inject = ['$stateParams', 'UserModel'];
+SettingsController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function SettingsController($stateParams, UserModel) {
+function SettingsController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -16,7 +16,7 @@ function SettingsController($stateParams, UserModel) {
   ////////////////
 
   function activate() {
-    console.log('SettingsController loaded');
+    $log.info('SettingsController loaded');
 
     UserModel.fetch(1).then(function(data) {
       vm.user = data;

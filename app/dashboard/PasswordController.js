@@ -2,10 +2,10 @@
 
 module.exports = PasswordController;
 
-PasswordController.$inject = ['$stateParams', 'UserModel'];
+PasswordController.$inject = ['$log', 'UserModel'];
 
 /* @ngInject */
-function PasswordController($stateParams, UserModel) {
+function PasswordController($log, UserModel) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -29,7 +29,7 @@ function PasswordController($stateParams, UserModel) {
   }
 
   function submit() {
-    console.log('submitting...');
+    $log.info('submitting...');
   }
 
 }
