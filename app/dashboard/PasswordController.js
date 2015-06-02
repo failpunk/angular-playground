@@ -1,8 +1,6 @@
 'use strict';
 
-angular
-  .module('Dashboard.Settings.Password', [])
-  .controller('PasswordController', PasswordController);
+module.exports = PasswordController;
 
 PasswordController.$inject = ['$stateParams', 'UserModel'];
 

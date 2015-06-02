@@ -1,105 +1,41 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var angular = require('angular');
+module.exports = Config;
 
-angular
-  .module('Models.User', [])
-  .factory('UserModel', UserModel);
+Config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-UserModel.$inject = ['$http', '$q'];
-
-/* @ngInject */
-function UserModel($http, $q) {
-
-  var userData;
-
-  var service = {
-    fetch: fetch
-  };
-
-  return service;
-
-  ////////////////
-
-  function fetch(id) {
-    if(userData) {
-      console.log('returning cached user');
-      return $q.when(userData);   // return cached data
-    } else {
-      console.log('Fetch user via ajax');
-      return $http.get('http://jsonplaceholder.typicode.com/users/' + id)
-        .then(function(response) {
-          return userData = response.data;
-        });
-    }
-  }
-
-}
-},{"angular":11}],2:[function(require,module,exports){
-'use strict';
-
-var angular = require('angular');
-require('ui-router');
-
-require('./dashboard/Dashboard');
-
-
-var globalDeps = [
-  'ui.router',
-  require('angular-messages'),
-
-  'Models.User',
-  'Dashboard',
-];
-
-
-angular
-  .module('Studymode', globalDeps)
-  .controller('NavController', NavController)
-  .config(appConfig)
-  .run(Run);
-
-
-Run.$inject = ['$rootScope', '$state'];
-
-function Run($rootScope, $state) {
-  // make current rout available on the root scope
-  $rootScope.$on('$stateChangeStart', function(event, toState) {
-    $rootScope.state = toState;
-  })
-}
-
-
-appConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-function appConfig($stateProvider, $urlRouterProvider) {
+function Config($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('/dashboard/profile');
 
   $stateProvider
-      .state('profile', {
-        url: '/dashboard/profile',
-        controller: 'ProfileController as vm',
-        templateUrl: 'templates/profile.html'
-      })
-      .state('settings', {
-        url: '/dashboard/settings',
-        controller: 'SettingsController as vm',
-        templateUrl: 'templates/settings.html'
-      })
-          .state('password', {
-            url: '/dashboard/settings/password',
-            controller: 'PasswordController as vm',
-            templateUrl: 'templates/password.html'
-          })
-      .state('messages', {
-        url: '/dashboard/messages',
-        controller: 'MessagesController as vm',
-        templateUrl: 'templates/messages.html'
-      })
+    .state('profile', {
+      url: '/dashboard/profile',
+      controller: 'ProfileController as vm',
+      templateUrl: 'templates/profile.html'
+    })
+    .state('settings', {
+      url: '/dashboard/settings',
+      controller: 'SettingsController as vm',
+      templateUrl: 'templates/settings.html'
+    })
+    .state('password', {
+      url: '/dashboard/settings/password',
+      controller: 'PasswordController as vm',
+      templateUrl: 'templates/password.html'
+    })
+    .state('messages', {
+      url: '/dashboard/messages',
+      controller: 'MessagesController as vm',
+      templateUrl: 'templates/messages.html'
+    })
   ;
 }
+},{}],2:[function(require,module,exports){
+'use strict';
+
+module.exports = NavController;
 
 NavController.$inject = ['$location'];
 
@@ -116,28 +52,40 @@ function NavController($location) {
     return $location.$$path.indexOf(string) > -1
   }
 }
-},{"./dashboard/Dashboard":3,"angular":11,"angular-messages":9,"ui-router":12}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
-require('./SettingsController');
-require('./ProfileController');
-require('./MessagesController');
-require('./PasswordController');
+module.exports = Run;
 
-angular.module('Dashboard', [
-  'Dashboard.Profile',
-  'Dashboard.Settings',
-  'Dashboard.Messages',
-  'Dashboard.Settings.Password',
+Run.$inject = ['$rootScope'];
+
+function Run($rootScope) {
+  // make current rout available on the root scope
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+    $rootScope.state = toState;
+  })
+}
+},{}],4:[function(require,module,exports){
+'use strict';
+
+var angular = require('angular');
+
+var app = angular.module('Studymode', [
+  require('ui-router'),
+  require('angular-messages')
 ]);
 
-module.exports = 'Dashboard';
-},{"./MessagesController":4,"./PasswordController":5,"./ProfileController":6,"./SettingsController":7}],4:[function(require,module,exports){
+app.controller('NavController', require('./NavController'));
+app.config(require('./Config'));
+app.run(require('./Run'));
+
+
+require('./dashboard');
+require('./services');
+},{"./Config":1,"./NavController":2,"./Run":3,"./dashboard":9,"./services":11,"angular":15,"angular-messages":13,"ui-router":16}],5:[function(require,module,exports){
 'use strict';
 
-angular
-  .module('Dashboard.Messages', [])
-  .controller('MessagesController', MessagesController);
+module.exports = MessagesController;
 
 MessagesController.$inject = ['$stateParams', 'UserModel'];
 
@@ -159,12 +107,10 @@ function MessagesController($stateParams, UserModel) {
   }
 
 }
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
-angular
-  .module('Dashboard.Settings.Password', [])
-  .controller('PasswordController', PasswordController);
+module.exports = PasswordController;
 
 PasswordController.$inject = ['$stateParams', 'UserModel'];
 
@@ -197,12 +143,10 @@ function PasswordController($stateParams, UserModel) {
   }
 
 }
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
-angular
-  .module('Dashboard.Profile', [])
-  .controller('ProfileController', ProfileController);
+module.exports = ProfileController;
 
 ProfileController.$inject = ['$stateParams', 'UserModel'];
 
@@ -226,14 +170,10 @@ function ProfileController($stateParams, UserModel) {
   }
 
 }
-
-module.exports = 'Dashboard.Profile';
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
-angular
-  .module('Dashboard.Settings', [])
-  .controller('SettingsController', SettingsController);
+module.exports = SettingsController;
 
 SettingsController.$inject = ['$stateParams', 'UserModel'];
 
@@ -257,9 +197,54 @@ function SettingsController($stateParams, UserModel) {
   }
 
 }
+},{}],9:[function(require,module,exports){
+'use strict';
+var app = require('angular').module('Studymode');
 
-module.exports = 'Dashboard.Settings';
-},{}],8:[function(require,module,exports){
+app.controller('ProfileController', require('./ProfileController'));
+app.controller('SettingsController', require('./SettingsController'));
+app.controller('MessagesController', require('./MessagesController'));
+app.controller('PasswordController', require('./PasswordController'));
+},{"./MessagesController":5,"./PasswordController":6,"./ProfileController":7,"./SettingsController":8,"angular":15}],10:[function(require,module,exports){
+'use strict';
+
+module.exports = UserModel;
+
+UserModel.$inject = ['$http', '$q'];
+
+/* @ngInject */
+function UserModel($http, $q) {
+
+  var userData;
+
+  var service = {
+    fetch: fetch
+  };
+
+  return service;
+
+  ////////////////
+
+  function fetch(id) {
+    if(userData) {
+      console.log('returning cached user');
+      return $q.when(userData);   // return cached data
+    } else {
+      console.log('Fetch user via ajax');
+      return $http.get('http://jsonplaceholder.typicode.com/users/' + id)
+        .then(function(response) {
+          return userData = response.data;
+        });
+    }
+  }
+
+}
+},{}],11:[function(require,module,exports){
+'use strict';
+var app = require('angular').module('Studymode');
+
+app.factory('UserModel', require('./UserModel'));
+},{"./UserModel":10,"angular":15}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -939,11 +924,11 @@ function ngMessageDirectiveFactory(restrict) {
 
 })(window, window.angular);
 
-},{}],9:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular-messages');
 module.exports = 'ngMessages';
 
-},{"./angular-messages":8}],10:[function(require,module,exports){
+},{"./angular-messages":12}],14:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -29077,11 +29062,11 @@ var minlengthDirective = function() {
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],11:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":10}],12:[function(require,module,exports){
+},{"./angular":14}],16:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.8
@@ -31739,4 +31724,4 @@ angular.module('ui.router.compat')
   .provider('$route', $RouteProvider)
   .directive('ngView', $ViewDirective);
 })(window, window.angular);
-},{}]},{},[1,2,3,4,5,6,7]);
+},{}]},{},[1,2,3,4,5,6,7,8,9,10,11]);

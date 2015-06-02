@@ -1,8 +1,6 @@
 'use strict';
 
-angular
-  .module('Dashboard.Profile', [])
-  .controller('ProfileController', ProfileController);
+module.exports = ProfileController;
 
 ProfileController.$inject = ['$stateParams', 'UserModel'];
 
@@ -26,5 +24,3 @@ function ProfileController($stateParams, UserModel) {
   }
 
 }
-
-module.exports = 'Dashboard.Profile';

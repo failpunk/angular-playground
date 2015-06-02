@@ -1,10 +1,6 @@
 'use strict';
 
-var angular = require('angular');
-
-angular
-  .module('Models.User', [])
-  .factory('UserModel', UserModel);
+module.exports = UserModel;
 
 UserModel.$inject = ['$http', '$q'];
 

@@ -1,8 +1,6 @@
 'use strict';
 
-angular
-  .module('Dashboard.Messages', [])
-  .controller('MessagesController', MessagesController);
+module.exports = MessagesController;
 
 MessagesController.$inject = ['$stateParams', 'UserModel'];
 

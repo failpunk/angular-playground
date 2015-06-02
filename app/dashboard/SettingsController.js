@@ -1,8 +1,6 @@
 'use strict';
 
-angular
-  .module('Dashboard.Settings', [])
-  .controller('SettingsController', SettingsController);
+module.exports = SettingsController;
 
 SettingsController.$inject = ['$stateParams', 'UserModel'];
 
@@ -26,5 +24,3 @@ function SettingsController($stateParams, UserModel) {
   }
 
 }
-
-module.exports = 'Dashboard.Settings';
