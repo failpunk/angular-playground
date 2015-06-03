@@ -10,7 +10,8 @@ function DataService($http, $q, $log) {
   var userData;
 
   var service = {
-    getUser: getUser
+    getUser: getUser,
+    saveUser: saveUser
   };
 
   return service;
@@ -28,6 +29,13 @@ function DataService($http, $q, $log) {
           return userData = response.data;
         });
     }
+  }
+
+  function saveUser(id, data) {
+    return $http.put(
+      'http://jsonplaceholder.typicode.com/users/' + id,
+      data
+    );
   }
 
 }

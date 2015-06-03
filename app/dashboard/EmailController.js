@@ -2,14 +2,15 @@
 
 module.exports = EmailController;
 
-EmailController.$inject = ['$log', 'DataService'];
+EmailController.$inject = ['$log', 'DataService', 'toastr', '$state'];
 
 /* @ngInject */
-function EmailController($log, DataService) {
+function EmailController($log, DataService, toastr, $state) {
   /* jshint validthis: true */
   var vm = this;
 
   vm.submitForm = submit;
+  vm.modifyingEmail = false;
 
   activate();
 
@@ -24,7 +25,13 @@ function EmailController($log, DataService) {
   }
 
   function submit() {
-    $log.info('submitting...');
+    DataService.saveUser(vm.user.id, vm.user)
+      .then(function(response) {
+        toastr.success('Email preferences updated.');
+        $state.transitionTo('settings');
+      }, function() {
+        toastr.error('Email preferences failed to update.');
+      });
   }
 
 }
