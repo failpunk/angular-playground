@@ -173,10 +173,10 @@ function MessagesController($log, DataService) {
 
 module.exports = PasswordController;
 
-PasswordController.$inject = ['$log', 'DataService'];
+PasswordController.$inject = ['$log', 'DataService', 'toastr', '$state'];
 
 /* @ngInject */
-function PasswordController($log, DataService) {
+function PasswordController($log, DataService, toastr, $state) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -200,7 +200,15 @@ function PasswordController($log, DataService) {
   }
 
   function submit() {
-    $log.info('submitting...');
+    vm.user.password = vm.newPassword;
+
+    DataService.saveUser(vm.user.id, vm.user)
+      .then(function() {
+        toastr.success('Password updated.');
+        $state.transitionTo('settings');
+      }, function() {
+        toastr.error('Password failed to update.');
+      });
   }
 
 }
