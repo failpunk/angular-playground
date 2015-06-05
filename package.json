@@ -22,12 +22,6 @@
     "angular-toastr": "^1.4.1",
     "angular-translate": "^2.7.2",
     "bootstrap": "^3.3.4",
-    "browserify": "^10.2.3",
-    "browserify-shim": "^3.8.7",
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^3.8.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-watch": "^0.6.1",
     "jquery": "^2.1.4",
     "moment": "^2.10.3",
     "ui-router": "0.0.1"
@@ -35,6 +29,12 @@
   "devDependencies": {
     "jasmine": "^2.3.1",
     "karma": "^0.12.35",
-    "karma-jasmine": "^0.3.5"
+    "karma-jasmine": "^0.3.5",
+    "browserify": "^10.2.3",
+    "browserify-shim": "^3.8.7",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.8.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
