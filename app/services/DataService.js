@@ -8,10 +8,12 @@ DataService.$inject = ['$http', '$q', '$log'];
 function DataService($http, $q, $log) {
 
   var userData;
+  var authData;
 
   var service = {
     getUser: getUser,
-    saveUser: saveUser
+    saveUser: saveUser,
+    authenticate: authenticate
   };
 
   return service;
@@ -24,18 +26,43 @@ function DataService($http, $q, $log) {
       return $q.when(userData);   // return cached data
     } else {
       $log.info('Fetch user via ajax');
-      return $http.get('http://jsonplaceholder.typicode.com/users/' + id)
+      return $http.get(
+        '/v2/user/profile/' + authData.user_id,
+        {
+          headers: {
+            Token: 'Bearer ' + authData.access_token
+          }
+        }
+      )
         .then(function(response) {
-          return userData = response.data;
+          return userData = response.data.user;
         });
     }
   }
 
   function saveUser(id, data) {
     return $http.put(
-      'http://jsonplaceholder.typicode.com/users/' + id,
-      data
+      'https://jsonplaceholder.typicode.com/users/' + id,
+      data,
+      {
+        headers: {
+          'Token': authData.access_token
+        }
+      }
     );
+  }
+
+  function authenticate(username, password) {
+    return $http.post(
+      '/v2/user/signin?',
+      {
+        client_id: $.stmode.tplVars.client_id,
+        username: username,
+        password: password
+      }
+    ).then(function(data) {
+        return authData = data.data;
+      });
   }
 
 }

@@ -32,3 +32,7 @@ function Translations($translateProvider) {
 
   $translateProvider.preferredLanguage('en');
 }
+
+angular.element(document).ready(function() {
+  angular.bootstrap(document, ['Studymode']);
+});
