@@ -20,8 +20,8 @@ function DataService($http, $q, $log) {
 
   ////////////////
 
-  function getUser(id) {
-    if(userData) {
+  function getUser() {
+    if (userData) {
       $log.info('returning cached user');
       return $q.when(userData);   // return cached data
     } else {
@@ -34,7 +34,7 @@ function DataService($http, $q, $log) {
           }
         }
       )
-        .then(function(response) {
+        .then(function (response) {
           return userData = response.data.user;
         });
     }
@@ -52,6 +52,12 @@ function DataService($http, $q, $log) {
     );
   }
 
+  /**
+   * Authenticate with API
+   * @param username
+   * @param password
+   * @returns {*}
+   */
   function authenticate(username, password) {
     return $http.post(
       '/v2/user/signin?',
@@ -60,9 +66,26 @@ function DataService($http, $q, $log) {
         username: username,
         password: password
       }
-    ).then(function(data) {
-        return authData = data.data;
+    )
+      .then(unwrapOldResponse)
+      .then(function(data) {
+        return authData = data;
       });
+  }
+
+  /**
+   * Unwrap non-restful endpoints and return proper promise object state
+   * @param response
+   * @returns {Promise}
+   */
+  function unwrapOldResponse(response) {
+    var data = response.data;
+
+    if (!data.success) {
+      return $q.reject(data.errors);
+    }
+
+    return $q.when(data);
   }
 
 }

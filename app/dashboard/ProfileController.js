@@ -10,6 +10,7 @@ function ProfileController($log, DataService, toastr) {
   var vm = this;
 
   vm.auth = auth;
+  vm.user = {};
 
   activate();
 
@@ -17,18 +18,19 @@ function ProfileController($log, DataService, toastr) {
 
   function activate() {
     $log.info('ProfileController loaded');
-
-    //DataService.getUser(1).then(function(data) {
-    //  vm.user = data;
-    //});
   }
 
   function auth() {
     DataService.authenticate(vm.username, vm.password)
-      .then(function(response) {
-      }, function(response) {
-        toastr.error(response.data.error_description);
-      })
+      .then(success, error)
+  }
+
+  function success(data) {
+    toastr.success("You've been signed in " + data.user_name);
+  }
+
+  function error(message) {
+    toastr.error(message);
   }
 
 }

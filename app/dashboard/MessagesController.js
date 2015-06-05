@@ -16,7 +16,7 @@ function MessagesController($log, DataService) {
   function activate() {
     $log.info('MessagesController loaded');
 
-    DataService.getUser(1).then(function(data) {
+    DataService.getUser().then(function(data) {
       vm.user = data;
     });
   }

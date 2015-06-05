@@ -2,9 +2,11 @@
 
 module.exports = Config;
 
-Config.$inject = ['$stateProvider', '$urlRouterProvider'];
+Config.$inject = ['$stateProvider', '$urlRouterProvider', '$anchorScrollProvider'];
 
-function Config($stateProvider, $urlRouterProvider) {
+function Config($stateProvider, $urlRouterProvider, $anchorScrollProvider) {
+
+  $anchorScrollProvider.disableAutoScrolling();
 
   $urlRouterProvider.otherwise('/dashboard/profile');
 

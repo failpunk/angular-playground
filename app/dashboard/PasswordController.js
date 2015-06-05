@@ -19,7 +19,7 @@ function PasswordController($log, DataService, toastr, $state) {
   function activate() {
     console.log('PasswordController loaded');
 
-    DataService.getUser(1).then(function(data) {
+    DataService.getUser().then(function(data) {
       vm.user = data;
     });
   }
