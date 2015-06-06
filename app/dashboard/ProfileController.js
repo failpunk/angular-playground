@@ -2,10 +2,10 @@
 
 module.exports = ProfileController;
 
-ProfileController.$inject = ['$log', 'DataService', 'toastr'];
+ProfileController.$inject = ['$log', 'DataService', 'toastr', '$state'];
 
 /* @ngInject */
-function ProfileController($log, DataService, toastr) {
+function ProfileController($log, DataService, toastr, $state) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -22,11 +22,12 @@ function ProfileController($log, DataService, toastr) {
 
   function auth() {
     DataService.authenticate(vm.username, vm.password)
-      .then(success, error)
+      .then(success, error);
   }
 
   function success(data) {
     toastr.success("You've been signed in " + data.user_name);
+    $state.transitionTo('settings');
   }
 
   function error(message) {

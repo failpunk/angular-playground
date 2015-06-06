@@ -12,15 +12,24 @@ function DataService($http, $q, $log) {
 
   var service = {
     getUser: getUser,
+    authenticate: authenticate,
     updatePassword: updatePassword,
-    authenticate: authenticate
+    updateEmail: updateEmail
   };
 
   return service;
 
   ////////////////
 
+  /**
+   * Fetch user profile data
+   * @returns {*}
+   */
   function getUser() {
+    if(!authData) {
+      return $q.reject('User not signed in');
+    }
+
     if (userData) {
       $log.info('returning cached user');
       return $q.when(userData);   // return cached data
@@ -47,6 +56,25 @@ function DataService($http, $q, $log) {
         client_id: $.stmode.tplVars.client_id,
         old_password: oldPass,
         new_password: newPass
+      },
+      {
+        headers: {
+          Token: 'Bearer ' + authData.access_token
+        }
+      }
+    )
+      .then(unwrapOldResponse)
+      .then(function(data) {
+        return data;
+      });
+  }
+
+  function updateEmail(newEmail) {
+    return $http.post(
+      '/v2/user/change-email',
+      {
+        client_id: $.stmode.tplVars.client_id,
+        new_email: newEmail
       },
       {
         headers: {

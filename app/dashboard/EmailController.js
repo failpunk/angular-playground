@@ -19,16 +19,15 @@ function EmailController($log, DataService, toastr, $state) {
   function activate() {
     console.log('EmailController loaded');
 
-    DataService.getUser(1).then(function(data) {
+    DataService.getUser().then(function(data) {
       vm.user = data;
     });
   }
 
   function submit() {
-    vm.user.email = vm.email;
-
-    DataService.saveUser(vm.user.id, vm.user)
+    DataService.updateEmail(vm.email)
       .then(function(response) {
+        vm.user.email = vm.email;
         toastr.success('Email preferences updated.');
         $state.transitionTo('settings');
       }, function() {
