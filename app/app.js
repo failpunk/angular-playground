@@ -10,6 +10,8 @@ var app = angular.module('Studymode', [
   'pascalprecht.translate'
 ]);
 
+app.value('_', require('lodash'));
+
 app.controller('NavController', require('./NavController'));
 app.config(require('./Config'));
 app.config(Translations);

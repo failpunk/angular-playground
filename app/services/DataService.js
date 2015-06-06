@@ -12,7 +12,7 @@ function DataService($http, $q, $log) {
 
   var service = {
     getUser: getUser,
-    saveUser: saveUser,
+    updatePassword: updatePassword,
     authenticate: authenticate
   };
 
@@ -40,16 +40,24 @@ function DataService($http, $q, $log) {
     }
   }
 
-  function saveUser(id, data) {
-    return $http.put(
-      'https://jsonplaceholder.typicode.com/users/' + id,
-      data,
+  function updatePassword(oldPass, newPass) {
+    return $http.post(
+      '/v2/user/change-password',
+      {
+        client_id: $.stmode.tplVars.client_id,
+        old_password: oldPass,
+        new_password: newPass
+      },
       {
         headers: {
-          'Token': authData.access_token
+          Token: 'Bearer ' + authData.access_token
         }
       }
-    );
+    )
+      .then(unwrapOldResponse)
+      .then(function(data) {
+        return data;
+      });
   }
 
   /**
