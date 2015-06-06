@@ -22,16 +22,16 @@ function ProfileController($log, DataService, toastr, $state) {
 
   function auth() {
     DataService.authenticate(vm.username, vm.password)
-      .then(success, error);
-  }
+      .then(authSuccess, authError);
 
-  function success(data) {
-    toastr.success("You've been signed in " + data.user_name);
-    $state.transitionTo('settings');
-  }
+    function authSuccess(auth) {
+      toastr.success("You've been signed in " + auth.user_name);
+      $state.transitionTo('settings');
+    }
 
-  function error(message) {
-    toastr.error(message);
+    function authError(error) {
+      toastr.error(error);
+    }
   }
 
 }

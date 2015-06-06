@@ -2,13 +2,12 @@
 
 module.exports = DataService;
 
-DataService.$inject = ['$http', '$q', '$log'];
+DataService.$inject = ['$http', '$q', '$log', 'smAuth'];
 
 /* @ngInject */
-function DataService($http, $q, $log) {
+function DataService($http, $q, $log, smAuth) {
 
   var userData;
-  var authData;
 
   var service = {
     getUser: getUser,
@@ -26,7 +25,7 @@ function DataService($http, $q, $log) {
    * @returns {*}
    */
   function getUser() {
-    if(!authData) {
+    if(!smAuth.signedIn()) {
       return $q.reject('User not signed in');
     }
 
@@ -36,56 +35,47 @@ function DataService($http, $q, $log) {
     } else {
       $log.info('Fetch user via ajax');
       return $http.get(
-        '/v2/user/profile/' + authData.user_id,
-        {
-          headers: {
-            Token: 'Bearer ' + authData.access_token
-          }
-        }
+        '/v2/user/profile/' + smAuth.getAuthData().user_id
       )
-        .then(function (response) {
-          return userData = response.data.user;
-        });
+        .then(userSuccess, promiseError);
+    }
+
+    function userSuccess(response) {
+      return userData = response.data.user;
     }
   }
 
+  /**
+   * Update user's password
+   * @param oldPass
+   * @param newPass
+   * @returns {*}
+   */
   function updatePassword(oldPass, newPass) {
     return $http.post(
       '/v2/user/change-password',
       {
-        client_id: $.stmode.tplVars.client_id,
         old_password: oldPass,
         new_password: newPass
-      },
-      {
-        headers: {
-          Token: 'Bearer ' + authData.access_token
-        }
       }
     )
-      .then(unwrapOldResponse)
-      .then(function(data) {
-        return data;
-      });
+      .then(promiseSuccess, promiseError);
   }
 
+  /**
+   * Update user's email
+   * @param newEmail
+   * @returns {*}
+   */
   function updateEmail(newEmail) {
     return $http.post(
       '/v2/user/change-email',
       {
         client_id: $.stmode.tplVars.client_id,
         new_email: newEmail
-      },
-      {
-        headers: {
-          Token: 'Bearer ' + authData.access_token
-        }
       }
     )
-      .then(unwrapOldResponse)
-      .then(function(data) {
-        return data;
-      });
+      .then(promiseSuccess, promiseError);
   }
 
   /**
@@ -103,25 +93,29 @@ function DataService($http, $q, $log) {
         password: password
       }
     )
-      .then(unwrapOldResponse)
-      .then(function(data) {
-        return authData = data;
-      });
-  }
+      .then(authSuccess, authError);
 
-  /**
-   * Unwrap non-restful endpoints and return proper promise object state
-   * @param response
-   * @returns {Promise}
-   */
-  function unwrapOldResponse(response) {
-    var data = response.data;
-
-    if (!data.success) {
-      return $q.reject(data.errors);
+    // extract, save, and return auth data
+    function authSuccess(response) {
+      smAuth.setAuthData(response.data);
+      return response.data;
     }
 
-    return $q.when(data);
+    function authError(response) {
+      return $q.reject(response.data.errors);
+    }
+  }
+
+  // Pass back just the errors
+  function promiseError(response) {
+    debugger;
+    return $q.reject(response.data.error);
+  }
+
+  // Pass back just the data
+  function promiseSuccess(response) {
+    debugger;
+    return $q.when(response.data.data);
   }
 
 }

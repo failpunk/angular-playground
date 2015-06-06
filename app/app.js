@@ -13,8 +13,11 @@ var app = angular.module('Studymode', [
 app.value('_', require('lodash'));
 
 app.controller('NavController', require('./NavController'));
+app.factory('smAuth', require('./smAuth'));
+app.factory('httpRequestInterceptor', require('./httpRequestInterceptor'));
 app.config(require('./Config'));
 app.config(Translations);
+app.config(require('./Interceptors'));
 app.run(require('./Run'));
 
 require('./dashboard');
