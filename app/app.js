@@ -11,6 +11,7 @@ var app = angular.module('Studymode', [
 ]);
 
 app.value('_', require('lodash'));
+app.value('CLIENT_ID', $.stmode.tplVars.client_id);
 
 app.controller('NavController', require('./NavController'));
 app.factory('smAuth', require('./smAuth'));

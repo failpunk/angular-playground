@@ -2,9 +2,9 @@
 
 module.exports = httpRequestInterceptor;
 
-httpRequestInterceptor.$inject = ['$q', '_', 'smAuth'];
+httpRequestInterceptor.$inject = ['$q', '_', 'smAuth', 'CLIENT_ID'];
 
-function httpRequestInterceptor($q, _, smAuth) {
+function httpRequestInterceptor($q, _, smAuth, CLIENT_ID) {
 
   return {
 
@@ -29,9 +29,12 @@ function httpRequestInterceptor($q, _, smAuth) {
     }
   };
 
+  /**
+   * Make old API calls a bit more restful by setting correct return status
+   * @param config
+   */
   function fixApiResponse(config) {
 
-    // Make old API calls a bit more restful by setting correct return status
     if(_.has(config.data, 'success')) {
       if(config.data.success === false) {
         config.status = 400;
@@ -57,7 +60,7 @@ function httpRequestInterceptor($q, _, smAuth) {
    */
   function addClientId(config) {
     config.data = angular.extend(config.data || {}, {
-      client_id: $.stmode.tplVars.client_id
+      client_id: CLIENT_ID
     });
   }
 }
