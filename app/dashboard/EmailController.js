@@ -26,7 +26,7 @@ function EmailController($log, DataService, toastr, $state) {
 
   function submit() {
     DataService.updateEmail(vm.email)
-      .then(function(response) {
+      .then(function(data) {
         vm.user.email = vm.email;
         toastr.success('Email preferences updated.');
         $state.transitionTo('settings');

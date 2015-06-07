@@ -71,7 +71,6 @@ function DataService($http, $q, $log, smAuth) {
     return $http.post(
       '/v2/user/change-email',
       {
-        client_id: $.stmode.tplVars.client_id,
         new_email: newEmail
       }
     )
@@ -88,7 +87,6 @@ function DataService($http, $q, $log, smAuth) {
     return $http.post(
       '/v2/user/signin?',
       {
-        client_id: $.stmode.tplVars.client_id,
         username: username,
         password: password
       }
@@ -108,14 +106,12 @@ function DataService($http, $q, $log, smAuth) {
 
   // Pass back just the errors
   function promiseError(response) {
-    debugger;
     return $q.reject(response.data.error);
   }
 
   // Pass back just the data
   function promiseSuccess(response) {
-    debugger;
-    return $q.when(response.data.data);
+    return $q.when(response.data);
   }
 
 }
