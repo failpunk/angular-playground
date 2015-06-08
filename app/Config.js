@@ -2,11 +2,11 @@
 
 module.exports = Config;
 
-Config.$inject = ['$stateProvider', '$urlRouterProvider', '$anchorScrollProvider'];
+Config.$inject = ['$stateProvider', '$urlRouterProvider', '$uiViewScrollProvider'];
 
-function Config($stateProvider, $urlRouterProvider, $anchorScrollProvider) {
+function Config($stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
 
-  $anchorScrollProvider.disableAutoScrolling();
+  $uiViewScrollProvider.useAnchorScroll();
 
   $urlRouterProvider.otherwise('/dashboard/profile');
 
@@ -14,12 +14,14 @@ function Config($stateProvider, $urlRouterProvider, $anchorScrollProvider) {
     .state('profile', {
       url: '/dashboard/profile',
       controller: 'ProfileController as vm',
-      templateUrl: 'templates/profile.html'
+      templateUrl: 'templates/profile.html',
+      deepStateRedirect: true
     })
     .state('settings', {
       url: '/dashboard/settings',
       controller: 'SettingsController as vm',
-      templateUrl: 'templates/settings.html'
+      templateUrl: 'templates/settings.html',
+      deepStateRedirect: true
     })
       .state('password', {
         url: '/dashboard/settings/password',
@@ -34,7 +36,8 @@ function Config($stateProvider, $urlRouterProvider, $anchorScrollProvider) {
     .state('messages', {
       url: '/dashboard/messages',
       controller: 'MessagesController as vm',
-      templateUrl: 'templates/messages.html'
+      templateUrl: 'templates/messages.html',
+      deepStateRedirect: true
     })
   ;
 }
