@@ -4,6 +4,10 @@ var angular = require('angular');
 var translate = require('../node_modules/angular-translate/dist/angular-translate.min');
 var angularLocalStorage = require('../node_modules/angular-local-storage/dist/angular-local-storage.min');
 
+/**
+ * Global Dependencies
+ * @type {module}
+ */
 var app = angular.module('Studymode', [
   require('ui-router'),
   require('angular-messages'),
@@ -12,35 +16,32 @@ var app = angular.module('Studymode', [
   'pascalprecht.translate'
 ]);
 
+/**
+ * Wrap external libs in Angular DI
+ */
 app.value('_', require('lodash'));
 app.value('CLIENT_ID', $.stmode.tplVars.client_id);
 
+/**
+ * Root
+ */
 app.controller('NavController', require('./NavController'));
 app.factory('smAuth', require('./smAuth'));
 app.factory('httpRequestInterceptor', require('./httpRequestInterceptor'));
 app.config(require('./Config'));
-app.config(Translations);
+app.config(require('./Translations'));
 app.config(require('./Interceptors'));
 app.run(require('./Run'));
 
+/**
+ * Require other modules
+ */
 require('./dashboard');
 require('./services');
 
-
-function Translations($translateProvider) {
-  $translateProvider
-    .translations('en', {
-      HEADLINE: 'Hello there, This is my awesome app!',
-      INTRO_TEXT: 'And it has i18n support!',
-      EMAIL_HEADING: "Email Preferences",
-      EMAIL_LEAD: "We'll occasionally send you account notifications and special offers to help you get the most out of StudyMode. We never share or sell your email address or personal information period.",
-      CURRENT_EMAIL: 'Current Email',
-      NEW_EMAIL: 'New Email'
-    });
-
-  $translateProvider.preferredLanguage('en');
-}
-
+/**
+ * Manually bootstrap the app
+ */
 angular.element(document).ready(function() {
   angular.bootstrap(document, ['Studymode']);
 });

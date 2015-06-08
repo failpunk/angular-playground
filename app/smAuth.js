@@ -6,8 +6,6 @@ smAuth.$inject = ['_', 'localStorageService'];
 
 function smAuth(_, localStorageService) {
 
-  console.log('localStorageService',localStorageService);
-
   // Public Api
   return {
     signedIn: signedIn,
