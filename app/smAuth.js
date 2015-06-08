@@ -2,11 +2,11 @@
 
 module.exports = smAuth;
 
-smAuth.$inject = ['_'];
+smAuth.$inject = ['_', 'localStorageService'];
 
-function smAuth(_) {
+function smAuth(_, localStorageService) {
 
-  var authData = {};
+  console.log('localStorageService',localStorageService);
 
   // Public Api
   return {
@@ -27,14 +27,14 @@ function smAuth(_) {
   }
 
   function setAuthData(data) {
-    authData = _.clone(data, true);
+    localStorageService.set('authData', data);
   }
 
   function getAuthData() {
-    return authData;
+    return localStorageService.get('authData');
   }
 
   function getTokenHeader() {
-    return 'Bearer ' + authData.access_token;
+    return 'Bearer ' + getAuthData().access_token;
   }
 }

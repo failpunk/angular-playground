@@ -2,11 +2,13 @@
 
 var angular = require('angular');
 var translate = require('../node_modules/angular-translate/dist/angular-translate.min');
+var angularLocalStorage = require('../node_modules/angular-local-storage/dist/angular-local-storage.min');
 
 var app = angular.module('Studymode', [
   require('ui-router'),
   require('angular-messages'),
   require('angular-toastr'),
+  'LocalStorageModule',
   'pascalprecht.translate'
 ]);
 
