@@ -9,11 +9,14 @@
 <div class="row">
   <div class="col-md-6">
 
-    <h4>{{vm.user.name}}</h4>
+    <pre>{{vm.user | json}}</pre>
 
-    <p class="lead">{{'HEADLINE' | translate}}</p>
+    <p class="lead">{{'HEADLINE' | translate | uppercase}}</p>
 
-    <p class="lead">{{'INTRO_TEXT' | translate}}</p>
+    <p translate="INTRO_TEXT" translate-values="{username: vm.user.username}"></p>
+
+    <a ng-click="vm.changeLang('de')" class="btn btn-primary btn-lg" role="button">German</a>
+    <a ng-click="vm.changeLang('en')" class="btn btn-primary btn-lg" role="button">English</a>
 
   </div>
 </div>

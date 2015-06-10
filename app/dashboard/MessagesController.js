@@ -2,12 +2,14 @@
 
 module.exports = MessagesController;
 
-MessagesController.$inject = ['$log', 'DataService'];
+MessagesController.$inject = ['$log', 'DataService', '$translate'];
 
 /* @ngInject */
-function MessagesController($log, DataService) {
+function MessagesController($log, DataService, $translate) {
   /* jshint validthis: true */
   var vm = this;
+
+  vm.changeLang = changeLang;
 
   activate();
 
@@ -19,6 +21,10 @@ function MessagesController($log, DataService) {
     DataService.getUser().then(function(data) {
       vm.user = data;
     });
+  }
+
+  function changeLang(lang) {
+    $translate.use(lang);
   }
 
 }

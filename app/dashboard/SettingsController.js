@@ -9,8 +9,6 @@ function SettingsController($log, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
-  vm.message = 'Your new WTF settings ';
-
   activate();
 
   ////////////////
