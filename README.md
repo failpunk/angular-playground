@@ -10,3 +10,9 @@ $ git pull origin hijack
 $ npm install
 $ grunt
 ```
+
+### Rest Server
+Make sure db.json file is just outside of project dir `../db.json`
+```
+$ node server.js
+```
