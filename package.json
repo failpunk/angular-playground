@@ -34,6 +34,7 @@
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "jasmine": "^2.3.1",
     "json-server": "^0.7.19",
