@@ -32,6 +32,14 @@ module.exports = function (grunt) {
       },
     },
 
+    uglify: {
+      my_target: {
+        files: {
+          '../public/application/js/account-hijack.js': ['web/js/app.js']
+        }
+      }
+    },
+
     watch: {
         files: 'app/**',
         tasks: ['browserify', 'copy']
@@ -53,7 +61,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // register
-  grunt.registerTask('default', ['browserify', 'copy']);
+  grunt.registerTask('default', ['browserify', 'copy', 'uglify']);
 };
