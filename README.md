@@ -1,5 +1,5 @@
 # angular-playground
-Messing around with Angular
+It's Angular and there is code.
 
 ### Setup
 ```
