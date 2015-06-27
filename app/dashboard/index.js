@@ -6,3 +6,4 @@ app.controller('SettingsController', require('./SettingsController'));
 app.controller('MessagesController', require('./MessagesController'));
 app.controller('PasswordController', require('./PasswordController'));
 app.controller('EmailController', require('./EmailController'));
+app.directive('dashboardHeader', require('./DashboardHeaderDirective'));

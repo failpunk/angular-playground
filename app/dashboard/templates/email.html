@@ -1,9 +1,8 @@
 <div>
-  <div class="page-header">
-    <h1>{{'EMAIL_HEADING' | translate}}</h1>
-
-    <p class="lead">{{'EMAIL_LEAD' | translate}}</p>
-  </div>
+  <dashboard-header
+      title="{{'EMAIL_HEADING' | translate}}"
+      subtitle="{{'EMAIL_LEAD' | translate}}">
+  </dashboard-header>
 
   <form name="vm.updateEmailForm" ng-submit="vm.submitForm()" novalidate>
 
