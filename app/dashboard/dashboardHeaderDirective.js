@@ -8,26 +8,35 @@ DashboardHeader.$inject = ['_'];
 function DashboardHeader(_) {
 
   var directive = {
-    link: link,
     templateUrl: 'templates/dashboardHeaderDirective.html',
     restrict: 'EA',
-    scope: true
+    scope: true,
+    bindToController: {
+      title: '@',
+      subtitle: '@',
+      breadcrumbs: '@'
+    },
+    controller: DashboardHeaderController,
+    controllerAs: 'vm'
   };
 
   return directive;
 
-  function link($scope, element, attrs) {
+  function DashboardHeaderController() {
+    /* jshint validthis: true */
+    var vm = this;
 
-    attrs.title = _.startCase(attrs.title);
-    $scope.showUpgradeButton = false;
+    activate();
 
-    $scope.attrs = attrs;
+    ////////////////
 
-    canUserUpgrade();
+    function activate() {
+      canUserUpgrade();
+    }
 
     function canUserUpgrade() {
       // logic to determine if user upgrade button should show
-      $scope.showUpgradeButton = true;
+      vm.showUpgradeButton = true;
     }
 
   }
