@@ -17,14 +17,17 @@ function DashboardHeader(_) {
   return directive;
 
   function link($scope, element, attrs) {
+
     attrs.title = _.startCase(attrs.title);
-    attrs.userCanUpgrade = userCanUpgrade;
+    $scope.showUpgradeButton = false;
 
     $scope.attrs = attrs;
 
-    function userCanUpgrade() {
+    canUserUpgrade();
+
+    function canUserUpgrade() {
       // logic to determine if user upgrade button should show
-      return true;
+      $scope.showUpgradeButton = true;
     }
 
   }

@@ -5,21 +5,21 @@
       <a
           href="/join"
           class="btn btn-primary upgrade"
-          ng-show="userCanUpgrade()">
+          ng-if="showUpgradeButton">
         Upgrade
       </a>
     </div>
 
     <div class="col-md-6 col-sm-8">
-      <h4>{{attrs.breadcrumbs}}</h4>
+      <h4>{{::attrs.breadcrumbs}}</h4>
     </div>
   </div>
 
   <div class="row">
     <div class="page-head">
       <div class="col-md-12">
-        <h1>{{attrs.title}}</h1>
-        <p ng-show="attrs.subtitle" class="lead">{{attrs.subtitle}}</p>
+        <h1>{{::attrs.title}}</h1>
+        <p ng-show="attrs.subtitle" class="lead">{{::attrs.subtitle}}</p>
       </div>
     </div>
   </div>
