@@ -9,6 +9,7 @@ function DataService($http, $q, $log, smUser) {
 
   var service = {
     getUser: getUser,
+    getUserMessages: getUserMessages,
     //authenticate: authenticate,
     updatePassword: updatePassword,
     updateEmail: updateEmail
@@ -41,6 +42,13 @@ function DataService($http, $q, $log, smUser) {
       smUser.setUserData(userData);
       return userData;
     }
+  }
+
+  function getUserMessages(userId) {
+    return $http.get(
+        '/api/users/' + userId + '/messages'
+    )
+        .then(promiseSuccess, promiseError);
   }
 
   /**
@@ -110,7 +118,7 @@ function DataService($http, $q, $log, smUser) {
 
   // Pass back just the data
   function promiseSuccess(response) {
-    return $q.when(response.data);
+    return $q.when(response.data.data);
   }
 
 }

@@ -1,0 +1,17 @@
+<div>
+
+  <!--LIST OF MASSAGES-->
+  <sm-user-messages-table
+      messages="vm.messages"
+      select-message="vm.selectMessage(message)"
+      ng-if="!vm.selectedMessage">
+  </sm-user-messages-table>
+
+  <!--VIEW A SINGLE MESSAGE-->
+  <sm-user-message-detail
+      message="vm.selectedMessage"
+      ng-if="vm.selectedMessage"
+      close-message="vm.closeMessage()">
+  </sm-user-message-detail>
+
+</div>
