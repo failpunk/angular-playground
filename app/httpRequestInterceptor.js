@@ -10,21 +10,12 @@ function httpRequestInterceptor($q, _, smAuth, CLIENT_ID) {
 
     request: function (config) {
 
-      //addAccessToken(config);
-      //addClientId(config);
       fixApiUrl(config);
 
       return config;
     },
 
     response: function (config) {
-
-      //fixApiResponse(config);
-
-      //if (config.status > 200) {
-      //  return $q.reject(config);
-      //}
-
       // Return the config or wrap it in a promise if blank.
       return config || $q.when(config);
     }

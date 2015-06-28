@@ -27,6 +27,7 @@ app.value('CLIENT_ID', $.stmode.tplVars.client_id);
  */
 app.controller('NavController', require('./NavController'));
 app.factory('smAuth', require('./smAuth'));
+app.factory('smUser', require('./smUser'));
 app.factory('httpRequestInterceptor', require('./httpRequestInterceptor'));
 app.config(require('./Config'));
 app.config(require('./Translations'));

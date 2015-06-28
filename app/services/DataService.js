@@ -2,12 +2,10 @@
 
 module.exports = DataService;
 
-DataService.$inject = ['$http', '$q', '$log', 'smAuth'];
+DataService.$inject = ['$http', '$q', '$log', 'smUser'];
 
 /* @ngInject */
-function DataService($http, $q, $log, smAuth) {
-
-  var userData;
+function DataService($http, $q, $log, smUser) {
 
   var service = {
     getUser: getUser,
@@ -25,9 +23,7 @@ function DataService($http, $q, $log, smAuth) {
    * @returns {*}
    */
   function getUser() {
-    //if(!smAuth.signedIn()) {
-    //  return $q.reject('User not signed in');
-    //}
+    var userData = smUser.getUserData();
 
     if (userData) {
       $log.info('returning cached user');
@@ -41,7 +37,9 @@ function DataService($http, $q, $log, smAuth) {
     }
 
     function userSuccess(response) {
-      return userData = response.data.data;
+      var userData = response.data.data;
+      smUser.setUserData(userData);
+      return userData;
     }
   }
 
@@ -53,7 +51,7 @@ function DataService($http, $q, $log, smAuth) {
    */
   function updatePassword(oldPass, newPass) {
     return $http.put(
-      '/api/users/'  + smAuth.getAuthData().user_id,
+      '/api/users/'  + smUser.user_id,
       {
         old_password: oldPass,
         new_password: newPass
