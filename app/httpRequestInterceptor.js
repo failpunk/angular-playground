@@ -10,20 +10,12 @@ function httpRequestInterceptor($q, _, smAuth, CLIENT_ID) {
 
     request: function (config) {
 
-      addAccessToken(config);
-      addClientId(config);
+      fixApiUrl(config);
 
       return config;
     },
 
     response: function (config) {
-
-      fixApiResponse(config);
-
-      if(config.status > 200) {
-        return $q.reject(config);
-      }
-
       // Return the config or wrap it in a promise if blank.
       return config || $q.when(config);
     }
@@ -35,8 +27,8 @@ function httpRequestInterceptor($q, _, smAuth, CLIENT_ID) {
    */
   function fixApiResponse(config) {
 
-    if(_.has(config.data, 'success')) {
-      if(config.data.success === false) {
+    if (_.has(config.data, 'success')) {
+      if (config.data.success === false) {
         config.status = 400;
       }
     }
@@ -47,7 +39,7 @@ function httpRequestInterceptor($q, _, smAuth, CLIENT_ID) {
    * @param config
    */
   function addAccessToken(config) {
-    if(smAuth.signedIn()) {
+    if (smAuth.signedIn()) {
       config.headers = angular.extend(config.headers, {
         Token: smAuth.getTokenHeader()
       });
@@ -62,5 +54,15 @@ function httpRequestInterceptor($q, _, smAuth, CLIENT_ID) {
     config.data = angular.extend(config.data || {}, {
       client_id: CLIENT_ID
     });
+  }
+
+  function fixApiUrl(config) {
+    // skip templates calls
+    if(/api/.test(config.url)) {
+      // modify url
+      config.url = 'http://localhost:3000' + config.url;
+    }
+
+    return config;
   }
 }

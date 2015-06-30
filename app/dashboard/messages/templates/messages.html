@@ -1,0 +1,14 @@
+<dashboard-header
+    title="My Messages">
+</dashboard-header>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+
+  <!--DISPLAY A LIST OF USER MESSAGES-->
+  <sm-user-messages-table
+      messages="vm.messages"
+      mark-as-read="vm.markAsRead(messages)"
+      delete-messages="vm.deleteMessages(messages)">
+  </sm-user-messages-table>
+
+</div>
