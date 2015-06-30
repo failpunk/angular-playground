@@ -2,6 +2,5 @@
 var app = require('angular').module('Studymode');
 
 app.controller('MessagesController', require('./MessagesController'));
-app.directive('smUserMessages', require('./userMessagesDirective'));
+app.controller('MessageDetailsController', require('./MessageDetailsController'));
 app.directive('smUserMessagesTable', require('./userMessagesTableDirective'));
-app.directive('smUserMessageDetail', require('./userMessageDetailDirective'));

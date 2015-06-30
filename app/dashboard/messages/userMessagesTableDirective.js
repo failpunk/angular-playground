@@ -5,15 +5,14 @@ module.exports = UserMessagesTable;
 UserMessagesTable.$inject = ['_'];
 
 /* @ngInject */
-function UserMessagesTable(_) {
+function UserMessagesTable() {
 
   var directive = {
     templateUrl: '../templates/UserMessagesTableDirective.html',
     restrict: 'EA',
     bindToController: true,
     scope: {
-      messages: '=',
-      selectMessage: '&'
+      messages: '='
     },
     controller: UserMessagesTableController,
     controllerAs: 'vm'
@@ -30,9 +29,12 @@ function UserMessagesTableController(_) {
   var vm = this;
 
   vm.showMessageActions = false;
+  vm.selectAllMessages = false;
 
   vm.toggleMessage = toggleMessage;
   vm.toggleAllMessages = toggleAllMessages;
+  vm.markAsRead = markAsRead;
+  vm.deleteMessages = deleteMessages;
 
   ////////////////
 
@@ -61,6 +63,14 @@ function UserMessagesTableController(_) {
     });
 
     toggleMessage();  // update state
+  }
+
+  function markAsRead() {
+
+  }
+
+  function deleteMessages() {
+
   }
 
 }

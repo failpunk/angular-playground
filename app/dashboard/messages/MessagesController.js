@@ -2,22 +2,26 @@
 
 module.exports = MessagesController;
 
-MessagesController.$inject = ['$log', 'DataService'];
+MessagesController.$inject = ['$log', 'DataService', 'smUser'];
 
 /* @ngInject */
-function MessagesController($log, DataService) {
+function MessagesController($log, DataService, smUser) {
   /* jshint validthis: true */
   var vm = this;
+
+  vm.messages = [];
 
   activate();
 
   ////////////////
 
   function activate() {
-    $log.info('MessagesController loaded in own dir');
+    $log.info('MessagesController loaded');
 
-    DataService.getUser().then(function(data) {
-      vm.user = data;
+    vm.user = smUser.getUserData();
+
+    DataService.getUserMessages(vm.user.userId).then(function(messages) {
+      vm.messages = messages;
     });
   }
 
