@@ -10,8 +10,8 @@ function DashboardHeader() {
   var directive = {
     templateUrl: 'templates/dashboardHeaderDirective.html',
     restrict: 'EA',
-    scope: true,
-    bindToController: {
+    bindToController: true,
+    scope: {
       title: '@',
       subtitle: '@',
       breadcrumbs: '@'
