@@ -14,7 +14,8 @@ function DataService($http, $q, $log, smUser) {
     updatePassword: updatePassword,
     updateEmail: updateEmail,
     getMessage: getMessage,
-    deleteMessage: deleteMessage
+    deleteMessage: deleteMessage,
+    updateMessage: updateMessage
   };
 
   return service;
@@ -95,6 +96,14 @@ function DataService($http, $q, $log, smUser) {
   function deleteMessage(messageId) {
     return $http.delete(
         '/api/messages/' + messageId
+    );
+        //.then(promiseSuccess, promiseError);
+  }
+
+  function updateMessage(messageId, params) {
+    return $http.put(
+        '/api/messages/' + messageId,
+        params
     )
         .then(promiseSuccess, promiseError);
   }

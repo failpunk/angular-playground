@@ -7,9 +7,9 @@
     </label>
   </div>
 
-  <div class="col-md-6 col-sm-4" ng-show="vm.showMessageActions">
-    <a href="#" class="btn btn-sm btn-primary" ng-click="vm.markAsRead()">Mark as Read</a>
-    <a href="#" class="btn btn-sm btn-primary" ng-click="vm.deleteMessages()">Delete</a>
+  <div class="col-md-6 col-sm-4" ng-show="vm.getSelected().length">
+    <a href class="btn btn-sm btn-primary" ng-click="vm.allRead()">Mark as Read</a>
+    <a href class="btn btn-sm btn-primary" ng-click="vm.deleteMessages({messages: vm.getSelected()})">Delete</a>
   </div>
 
   <table class="table table-striped table-hover msg-table dataTable no-footer">

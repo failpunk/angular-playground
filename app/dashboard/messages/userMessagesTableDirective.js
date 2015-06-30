@@ -12,7 +12,9 @@ function UserMessagesTable() {
     restrict: 'EA',
     bindToController: true,
     scope: {
-      messages: '='
+      messages: '=',
+      markAsRead: '&',
+      deleteMessages: '&'
     },
     controller: UserMessagesTableController,
     controllerAs: 'vm'
@@ -22,9 +24,9 @@ function UserMessagesTable() {
 
 }
 
-UserMessagesTableController.$inject = ['_'];
+UserMessagesTableController.$inject = ['_', 'DataService'];
 
-function UserMessagesTableController(_) {
+function UserMessagesTableController(_, DataService) {
   /* jshint validthis: true */
   var vm = this;
 
@@ -33,8 +35,8 @@ function UserMessagesTableController(_) {
 
   vm.toggleMessage = toggleMessage;
   vm.toggleAllMessages = toggleAllMessages;
-  vm.markAsRead = markAsRead;
-  vm.deleteMessages = deleteMessages;
+  vm.getSelected = getSelected;
+  vm.allRead = allRead;
 
   ////////////////
 
@@ -51,7 +53,7 @@ function UserMessagesTableController(_) {
    * @returns {*}
    */
   function getSelected() {
-    return _.findWhere(vm.messages, { 'isSelected': true });
+    return _.where(vm.messages, { 'isSelected': true });
   }
 
   /**
@@ -65,12 +67,9 @@ function UserMessagesTableController(_) {
     toggleMessage();  // update state
   }
 
-  function markAsRead() {
-
-  }
-
-  function deleteMessages() {
-
+  function allRead() {
+    vm.markAsRead({messages: vm.getSelected()});
+    toggleMessage();
   }
 
 }
