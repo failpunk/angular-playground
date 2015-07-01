@@ -47,11 +47,16 @@ function DataService($http, $q, $log, smUser) {
     }
   }
 
-  function getUserMessages(userId) {
-    return $http.get(
-        '/api/users/' + userId + '/messages'
-    )
-        .then(promiseSuccess, promiseError);
+  function getUserMessages(userId, paginate) {
+    var url = '/api/users/' + userId + '/messages';
+
+    //todo: get query params working in json server
+    //if(paginate) {
+    //  url += '?page=' + paginate.page;
+    //  url += '?limit=' + paginate.limit;
+    //}
+
+    return $http.get(url);
   }
 
   /**

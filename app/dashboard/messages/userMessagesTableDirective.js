@@ -24,9 +24,9 @@ function UserMessagesTable() {
 
 }
 
-UserMessagesTableController.$inject = ['_', 'DataService'];
+UserMessagesTableController.$inject = ['_'];
 
-function UserMessagesTableController(_, DataService) {
+function UserMessagesTableController(_) {
   /* jshint validthis: true */
   var vm = this;
 
