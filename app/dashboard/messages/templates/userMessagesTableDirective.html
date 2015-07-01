@@ -3,7 +3,8 @@
   <div class="dataTables_filter">
     <label>
       <input type="search"
-             placeholder="Search">
+             placeholder="Search"
+             ng-model="searchMessages">
     </label>
   </div>
 
@@ -16,37 +17,25 @@
     <thead>
     <tr role="row">
       <th class="select hidden-xs"
-          tabindex="0"
-          rowspan="1"
-          colspan="1"
           style="width: 56px;">
         <input type="checkbox" name="all_msg" ng-change="vm.toggleAllMessages()" ng-model="vm.selectAllMessages">
       </th>
       <th class="header subject sorting"
-          tabindex="0"
-          rowspan="1"
-          colspan="1"
-          style="width: 115px;">
+          style="width: 115px;"
+          ng-click="vm.sortType = 'fromName'; vm.sortReverse = !vm.sortReverse">
         <span class="hidden-xs">From</span>
       </th>
       <th class="header from hidden-xs sorting"
-          tabindex="0"
-          rowspan="1"
-          colspan="1"
-          style="width: 286px;">
+          style="width: 286px;"
+          ng-click="vm.sortType = 'subject'; vm.sortReverse = !vm.sortReverse">
         Subject
       </th>
       <th class="header received hidden-xs"
-          tabindex="0"
-          rowspan="1"
-          colspan="1"
-          style="width: 141px;">
+          style="width: 141px;"
+          ng-click="vm.sortType = 'dateAdded'; vm.sortReverse = !vm.sortReverse">
         Received
       </th>
       <th class="header actions hidden-xs"
-          tabindex="0"
-          rowspan="1"
-          colspan="1"
           style="width: 148px;">
       </th>
     </tr>
@@ -60,7 +49,10 @@
       </td>
     </tr>
 
-    <tr role="row" ng-repeat="message in vm.messages" class="{{message.status}}">
+    <tr
+        role="row"
+        ng-repeat="message in vm.messages | orderBy:vm.sortType:vm.sortReverse | filter:searchMessages"
+        class="{{message.status}}">
       <td class="hidden-xs">
         <input type="checkbox" ng-model="message.isSelected" ng-change="vm.toggleMessage()">
       </td>

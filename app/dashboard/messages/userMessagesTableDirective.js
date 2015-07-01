@@ -32,6 +32,7 @@ function UserMessagesTableController(_) {
 
   vm.showMessageActions = false;
   vm.selectAllMessages = false;
+  vm.sortReverse = false;
 
   vm.toggleMessage = toggleMessage;
   vm.toggleAllMessages = toggleAllMessages;
