@@ -37,6 +37,7 @@ app.run(require('./Run'));
 /**
  * Require other modules
  */
+require('./directives');
 require('./dashboard');
 require('./services');
 
