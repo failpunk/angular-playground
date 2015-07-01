@@ -23,9 +23,18 @@ function MessageDetailsController($log, DataService, $stateParams, $sce, $filter
 
     DataService.getMessage($stateParams.messageId).then(function (message) {
       vm.message = message;
+      markAsRead();
     });
   }
 
+  /**
+   * Mark message as read
+   */
+  function markAsRead() {
+    if(vm.message.status == 'unread') {
+      DataService.updateMessage(vm.message.id, {status: 'read'});
+    }
+  }
 
   // Render HTML
   function getMessageHtml() {
