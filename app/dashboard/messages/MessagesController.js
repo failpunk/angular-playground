@@ -13,6 +13,7 @@ function MessagesController($log, DataService, smUser, $q, _, toastr) {
 
   vm.messages = [];
 
+  vm.fetchMessages = fetchMessages;
   vm.markAsRead = markAsRead;
   vm.deleteMessages = deleteMessages;
 
@@ -22,9 +23,14 @@ function MessagesController($log, DataService, smUser, $q, _, toastr) {
 
   function activate() {
     $log.info('MessagesController loaded');
+    fetchMessages();
+  }
 
-    DataService.getUserMessages(vm.user.userId).then(function(messages) {
-      vm.messages = messages;
+  function fetchMessages(paginate) {
+    console.log('fetchMessages', paginate);
+    DataService.getUserMessages(vm.user.userId, paginate).then(function(response) {
+      vm.messages = response.data.data;
+      vm.meta = response.data.meta;
     });
   }
 

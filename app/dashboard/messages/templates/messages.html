@@ -11,4 +11,10 @@
       delete-messages="vm.deleteMessages(messages)">
   </sm-user-messages-table>
 
+  <!--TABLE PAGINATION-->
+  <sm-paginator
+      meta="vm.meta"
+      callback="vm.fetchMessages">
+  </sm-paginator>
+
 </div>

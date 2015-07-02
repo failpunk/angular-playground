@@ -13,11 +13,7 @@ server.use(jsonServer.defaults);
 var router = jsonServer.router('../db.json');
 
 router.render = function (req, res) {
-    res.jsonp({
-        data: res.locals.data,
-        meta: {},
-        error: {}
-    })
+    res.jsonp(formatData(req, res))
 },
 
 server.use(jsonServer.rewriter({
@@ -29,3 +25,30 @@ server.use(jsonServer.rewriter({
 server.use(router);
 
 server.listen(3000);
+
+
+///////////////
+
+function formatData(req, res) {
+
+  // new API response format
+  var formatted = {
+    data: {},
+    meta: {},
+    error: {}
+  };
+  console.log(req.body);
+  // add pagination data
+  if(req.path.indexOf("messages") > -1) {
+    formatted.meta = {
+      limit: 5,
+      page: 1,
+      last: 5
+    };
+    formatted.meta.count = res.locals.data.length;
+  }
+
+  formatted.data = res.locals.data;
+
+  return formatted;
+}

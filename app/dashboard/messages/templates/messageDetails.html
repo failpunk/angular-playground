@@ -22,11 +22,7 @@
   <div class="col-md-6 col-sm-6 pull-right text-right message-nav">
     <a ng-click="vm.deleteMessage()" class="btn btn-link">
       <span>Delete</span>
-      <!--todo:justin make into icon directive -->
-      <div class="iconBox">
-        <i class="icon front icon_trash_blue"></i>
-        <i class="icon back icon_trash_orange"></i>
-      </div>
+      <layered-icon front="trash_blue" back="trash_orange"></layered-icon>
     </a>
   </div>
   <div class="clearfix"></div>
