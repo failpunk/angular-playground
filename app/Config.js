@@ -39,5 +39,11 @@ function Config($stateProvider, $urlRouterProvider, $uiViewScrollProvider) {
       templateUrl: 'templates/messages.html',
       deepStateRedirect: true
     })
+      .state('message-detail', {
+        url: '/dashboard/messages/:messageId',
+        controller: 'MessageDetailsController as vm',
+        templateUrl: 'templates/messageDetails.html',
+        deepStateRedirect: true
+      })
   ;
 }

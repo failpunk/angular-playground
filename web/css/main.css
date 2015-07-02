@@ -1,5 +1,5 @@
-ng-messages {
-
+table.msg-table tr.unread {
+    font-weight: bold;
 }
 
 ng-message.help-block {

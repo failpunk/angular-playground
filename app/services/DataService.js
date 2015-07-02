@@ -2,18 +2,20 @@
 
 module.exports = DataService;
 
-DataService.$inject = ['$http', '$q', '$log', 'smAuth'];
+DataService.$inject = ['$http', '$q', '$log', 'smUser'];
 
 /* @ngInject */
-function DataService($http, $q, $log, smAuth) {
-
-  var userData;
+function DataService($http, $q, $log, smUser) {
 
   var service = {
     getUser: getUser,
-    authenticate: authenticate,
+    getUserMessages: getUserMessages,
+    //authenticate: authenticate,
     updatePassword: updatePassword,
-    updateEmail: updateEmail
+    updateEmail: updateEmail,
+    getMessage: getMessage,
+    deleteMessage: deleteMessage,
+    updateMessage: updateMessage
   };
 
   return service;
@@ -25,9 +27,7 @@ function DataService($http, $q, $log, smAuth) {
    * @returns {*}
    */
   function getUser() {
-    if(!smAuth.signedIn()) {
-      return $q.reject('User not signed in');
-    }
+    var userData = smUser.getUserData();
 
     if (userData) {
       $log.info('returning cached user');
@@ -35,14 +35,28 @@ function DataService($http, $q, $log, smAuth) {
     } else {
       $log.info('Fetch user via ajax');
       return $http.get(
-        '/v2/user/profile/' + smAuth.getAuthData().user_id
+        '/api/users/2'
       )
         .then(userSuccess, promiseError);
     }
 
     function userSuccess(response) {
-      return userData = response.data.user;
+      var userData = response.data.data;
+      smUser.setUserData(userData);
+      return userData;
     }
+  }
+
+  function getUserMessages(userId, paginate) {
+    var url = '/api/users/' + userId + '/messages';
+
+    //todo: get query params working in json server
+    //if(paginate) {
+    //  url += '?page=' + paginate.page;
+    //  url += '?limit=' + paginate.limit;
+    //}
+
+    return $http.get(url);
   }
 
   /**
@@ -52,8 +66,8 @@ function DataService($http, $q, $log, smAuth) {
    * @returns {*}
    */
   function updatePassword(oldPass, newPass) {
-    return $http.post(
-      '/v2/user/change-password',
+    return $http.put(
+      '/api/users/'  + smUser.user_id,
       {
         old_password: oldPass,
         new_password: newPass
@@ -69,12 +83,34 @@ function DataService($http, $q, $log, smAuth) {
    */
   function updateEmail(newEmail) {
     return $http.post(
-      '/v2/user/change-email',
+      '/api/users/change-email',
       {
         new_email: newEmail
       }
     )
       .then(promiseSuccess, promiseError);
+  }
+
+  function getMessage(messageId) {
+    return $http.get(
+        '/api/messages/' + messageId
+    )
+        .then(promiseSuccess, promiseError);
+  }
+
+  function deleteMessage(messageId) {
+    return $http.delete(
+        '/api/messages/' + messageId
+    );
+        //.then(promiseSuccess, promiseError);
+  }
+
+  function updateMessage(messageId, params) {
+    return $http.put(
+        '/api/messages/' + messageId,
+        params
+    )
+        .then(promiseSuccess, promiseError);
   }
 
   /**
@@ -83,26 +119,27 @@ function DataService($http, $q, $log, smAuth) {
    * @param password
    * @returns {*}
    */
-  function authenticate(username, password) {
-    return $http.post(
-      '/v2/user/signin?',
-      {
-        username: username,
-        password: password
-      }
-    )
-      .then(authSuccess, authError);
-
-    // extract, save, and return auth data
-    function authSuccess(response) {
-      smAuth.setAuthData(response.data);
-      return response.data;
-    }
-
-    function authError(response) {
-      return $q.reject(response.data.errors);
-    }
-  }
+  //function authenticate(username, password) {
+  //  return $http.post(
+  //    '/api/users/signin?',
+  //    {
+  //      username: username,
+  //      password: password
+  //    }
+  //  )
+  //    .then(authSuccess, authError);
+  //
+  //  // extract, save, and return auth data
+  //  function authSuccess(response) {
+  //    debugger;
+  //    smAuth.setAuthData(response.data);
+  //    return response.data;
+  //  }
+  //
+  //  function authError(response) {
+  //    return $q.reject(response.data.errors);
+  //  }
+  //}
 
   // Pass back just the errors
   function promiseError(response) {
@@ -111,7 +148,7 @@ function DataService($http, $q, $log, smAuth) {
 
   // Pass back just the data
   function promiseSuccess(response) {
-    return $q.when(response.data);
+    return $q.when(response.data.data);
   }
 
 }

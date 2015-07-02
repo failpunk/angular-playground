@@ -1,0 +1,42 @@
+<dashboard-header
+    title="{{vm.message.subject}}"
+    breadcrumbs="Messages">
+</dashboard-header>
+
+<hr/>
+
+<!--HEADER-->
+<div class="message-header-container">
+  <div class="col-md-6 col-sm-6 message-details">
+    <div class="col-md-3 pull-left">
+      <p><strong>From:</strong></p>
+      <p><strong>Subject:</strong></p>
+      <p><strong>Date:</strong></p>
+    </div>
+    <div class="col-md-6">
+      <p>{{::vm.message.fromName}}</p>
+      <p>{{::vm.message.subject}}</p>
+      <p>{{vm.messageDate()}}</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-6 pull-right text-right message-nav">
+    <a ng-click="vm.deleteMessage()" class="btn btn-link">
+      <span>Delete</span>
+      <layered-icon front="trash_blue" back="trash_orange"></layered-icon>
+    </a>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<hr/>
+
+<!--MESSAGE-->
+<div class="col-md-12 col-sm-12 col-xs-12 msg-body">
+  <div ng-bind-html="vm.getMessageHtml()"></div>
+</div>
+
+<!--FOOTER-->
+<hr/>
+<div class="col-md-3 col-sm-1">
+  <a href class="btn btn-primary" ui-sref="messages">Done</a>
+</div>

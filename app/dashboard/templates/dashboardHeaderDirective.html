@@ -1,0 +1,27 @@
+<div>
+
+  <div class="row">
+    <div class="col-md-6 col-sm-4 pull-right">
+      <a
+          href="/join"
+          class="btn btn-primary upgrade"
+          ng-if="vm.showUpgradeButton">
+        Upgrade
+      </a>
+    </div>
+
+    <div class="col-md-6 col-sm-8">
+      <h4>{{vm.breadcrumbs}}</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="page-head">
+      <div class="col-md-12">
+        <h1>{{vm.title}}</h1>
+        <p ng-show="vm.subtitle" class="lead">{{vm.subtitle}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
