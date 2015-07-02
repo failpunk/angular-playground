@@ -27,6 +27,8 @@ server.use(router);
 server.listen(3000);
 
 
+console.log('Magic happens on port: 3000');
+
 ///////////////
 
 function formatData(req, res) {
